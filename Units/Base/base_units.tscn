@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dphwadiyoskhh"]
+
+[ext_resource type="Script" uid="uid://cqy5imh4whbkx" path="res://Units/Base/SelectableUnit.cs" id="1_n88xu"]
+[ext_resource type="Texture2D" uid="uid://cbvgclh6gda0c" path="res://Tiny Swords (Update 010)/UI/Pointers/02.png" id="2_atna4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iqq2v"]
+radius = 37.363083
+
+[node name="BaseUnits" type="CharacterBody2D" node_paths=PackedStringArray("IndicatorSprite", "NavAgent") groups=["Units"]]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_n88xu")
+IndicatorSprite = NodePath("SelectionIndicator")
+MoveSpeed = 400.0
+NavAgent = NodePath("NavigationAgent2D")
+
+[node name="SelectionIndicator" type="Sprite2D" parent="."]
+visible = false
+z_index = 100
+texture = ExtResource("2_atna4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_iqq2v")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true

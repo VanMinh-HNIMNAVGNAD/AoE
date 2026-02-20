@@ -1,0 +1,151 @@
+[gd_scene load_steps=21 format=3 uid="uid://2fexmigd4m7i"]
+
+[ext_resource type="Script" uid="uid://b5d0jh78t6q51" path="res://Actor/SceneFarmer/Farmer.cs" id="1_dmryh"]
+[ext_resource type="Texture2D" uid="uid://bvsqo0gucevwr" path="res://Actor/Farmer/Pawn_Idle.png" id="1_wnmp2"]
+[ext_resource type="Texture2D" uid="uid://bjhp7ugvhxm3h" path="res://Actor/Farmer/Pawn_Run.png" id="2_dmryh"]
+[ext_resource type="Texture2D" uid="uid://b735b80cm6yd8" path="res://Assets/Cursor/Cursor_04.png" id="3_select"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05k4s"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmryh"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deyww"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqvyd"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur5yr"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a338c"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3ace"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvsy7"]
+atlas = ExtResource("1_wnmp2")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_py83m"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvjq0"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fi1je"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hps3m"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fj6d"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hdg4"]
+atlas = ExtResource("2_dmryh")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_py83m"]
+animations = [{
+"frames": [{
+"duration": 1.01,
+"texture": SubResource("AtlasTexture_05k4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmryh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deyww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqvyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur5yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a338c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3ace")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvsy7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_py83m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvjq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fi1je")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hps3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fj6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hdg4")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmryh"]
+radius = 16.0
+
+[node name="Farmer" type="CharacterBody2D" groups=["Units"]]
+script = ExtResource("1_dmryh")
+
+[node name="SelectionRing" type="Sprite2D" parent="."]
+top_level = false
+visible = false
+position = Vector2(0, 0)
+scale = Vector2(0.4, 0.5125)
+texture = ExtResource("3_select")
+
+[node name="BodySprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_py83m")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.02132937
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dmryh")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 16.0
+neighbor_distance = 100.0
+max_neighbors = 10
+max_speed = 150.0
+path_max_distance = 100.0
+avoidance_enabled = true
+avoidance_layers = 1
+avoidance_mask = 1
+debug_enabled = true

@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://dx8h8fnyoftgc"]
+
+[ext_resource type="Texture2D" uid="uid://13wiac0u5wbw" path="res://Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree3.png" id="1_6qyuc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gr0y"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33mre"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp1y5"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3676m"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq7fm"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryh4h"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbrw2"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcirt"]
+atlas = ExtResource("1_6qyuc")
+region = Rect2(1344, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3o3af"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gr0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33mre")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gp1y5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3676m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq7fm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryh4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbrw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcirt")
+}],
+"loop": true,
+"name": &"maples",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6qyuc"]
+radius = 8.333333
+
+[node name="maple" type="StaticBody2D" groups=["Resource", "Tree"]]
+texture_filter = 1
+scale = Vector2(0.6, 0.6)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
+sprite_frames = SubResource("SpriteFrames_3o3af")
+animation = &"maples"
+autoplay = "maples"
+frame_progress = 0.17289108
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.6666666, 51.666664)
+shape = SubResource("CapsuleShape2D_6qyuc")
+debug_color = Color(0.8110221, 0.37546372, 0.45316184, 0.41960785)

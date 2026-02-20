@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://78jwcsr01u2y"]
+
+[ext_resource type="Script" uid="uid://bbatbdpc3cqf5" path="res://Actor/SceneUnits/Unit.cs" id="1_m2pfv"]
+[ext_resource type="Texture2D" uid="uid://b735b80cm6yd8" path="res://Assets/Cursor/Cursor_04.png" id="1_pn2vo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0vwey"]
+radius = 16.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Units"]]
+script = ExtResource("1_m2pfv")
+
+[node name="SelectionRing" type="Sprite2D" parent="."]
+top_level = false
+visible = false
+position = Vector2(0, 0)
+scale = Vector2(0.4, 0.5125)
+texture = ExtResource("1_pn2vo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0vwey")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+radius = 16.0
+neighbor_distance = 100.0
+max_neighbors = 10
+max_speed = 150.0
+path_max_distance = 100.0
+avoidance_enabled = true
+avoidance_layers = 1
+avoidance_mask = 1

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cntfe42jjdisw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0fglf"]
+bg_color = Color(0.2627451, 0.6431373, 0.8509804, 0.21960784)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.66348964, 0.8913358, 0, 1)
+
+[node name="UI" type="CanvasGroup"]
+
+[node name="SelectionBox" type="Panel" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0fglf")

@@ -1,0 +1,9 @@
+.import/
+.godot/
+export.cfg
+export_presets.cfg
+*.tmp
+*.log
+*.blend
+*.exe
+*.pck

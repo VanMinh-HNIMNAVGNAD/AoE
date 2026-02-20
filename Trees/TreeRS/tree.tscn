@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://brpf15i175lp8"]
+
+[ext_resource type="Texture2D" uid="uid://cpqxp05mrptvb" path="res://Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree1.png" id="1_m6g87"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bi5d3"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(0, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uvm1"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(192, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6qyw"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(384, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wqno"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(576, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ns8k8"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(768, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr4rq"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(960, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6obk"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(1152, 0, 192, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7b8h"]
+atlas = ExtResource("1_m6g87")
+region = Rect2(1344, 0, 192, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gvdgx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bi5d3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uvm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6qyw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wqno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ns8k8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr4rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6obk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7b8h")
+}],
+"loop": true,
+"name": &"pine tree",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6g87"]
+radius = 19.0
+height = 74.0
+
+[node name="Pine" type="StaticBody2D" groups=["Resource", "Tree"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
+sprite_frames = SubResource("SpriteFrames_gvdgx")
+animation = &"pine tree"
+autoplay = "pine tree"
+frame_progress = 0.7197749
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(1, 73)
+shape = SubResource("CapsuleShape2D_m6g87")
+debug_color = Color(0.89344764, 0.29844326, 0.3210454, 0.41960785)
