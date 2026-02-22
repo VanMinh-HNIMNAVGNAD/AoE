@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dx8h8fnyoftgc"]
+[gd_scene load_steps=13 format=3 uid="uid://dx8h8fnyoftgc"]
 
 [ext_resource type="Texture2D" uid="uid://13wiac0u5wbw" path="res://Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree3.png" id="1_6qyuc"]
+[ext_resource type="Script" uid="uid://d3yt34ldhjyfq" path="res://Trees/TreeSc/ResourceNode.cs" id="1_cpeic"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gr0y"]
 atlas = ExtResource("1_6qyuc")
@@ -72,6 +73,7 @@ radius = 8.333333
 [node name="maple" type="StaticBody2D" groups=["Resource", "Tree"]]
 texture_filter = 1
 scale = Vector2(0.6, 0.6)
+script = ExtResource("1_cpeic")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
 sprite_frames = SubResource("SpriteFrames_3o3af")
@@ -80,6 +82,6 @@ autoplay = "maples"
 frame_progress = 0.17289108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.6666666, 51.666664)
+position = Vector2(0, 53.333332)
 shape = SubResource("CapsuleShape2D_6qyuc")
 debug_color = Color(0.8110221, 0.37546372, 0.45316184, 0.41960785)

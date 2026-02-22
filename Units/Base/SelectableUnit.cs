@@ -10,6 +10,8 @@ public enum UnitState
 }
 public partial class SelectableUnit : CharacterBody2D
 {
+	[ExportGroup("Dữ liệu Lính")]
+	[Export] public UnitsData Stats;
 	[ExportGroup("Cấu hình Hiển thị")] 
 	[Export] public Sprite2D IndicatorSprite; 
 
@@ -72,8 +74,11 @@ public partial class SelectableUnit : CharacterBody2D
 			break;
 			case UnitState.MoveToInteract:
 				// 1. Nếu tự nhiên mục tiêu biến mất (ví dụ cây bị thằng khác chặt mất rồi) -> Đứng chơi
-				if (CurrentTarget == null)
+				// PHẢI dùng IsInstanceValid() thay vì == null, vì object bị QueueFree() 
+				// sẽ không null nhưng đã bị dispose → truy cập sẽ crash
+				if (!IsInstanceValid(CurrentTarget))
 				{
+					CurrentTarget = null;
 					CurrentState = UnitState.Idle;
 					break;
 				}
@@ -98,8 +103,52 @@ public partial class SelectableUnit : CharacterBody2D
 				}
 				break;
 			case UnitState.Gather:
-				// (Lát nữa chúng ta sẽ viết logic vung rìu ở đây)
-				Velocity = Vector2.Zero; // Đảm bảo đang chặt thì không bị trượt đi
+				Velocity = Vector2.Zero; // Đứng yên tại chỗ
+
+				// Nếu mục tiêu đột nhiên bị QueueFree() (cây đã gãy) thì lính phải biết đường nghỉ tay
+				if (!IsInstanceValid(CurrentTarget))
+				{
+					GD.Print($"[{Name}] Cây đã hết! Chuyển về trạng thái rảnh rỗi.");
+					CurrentState = UnitState.Idle;
+					CurrentTarget = null;
+					break;
+				}
+
+				// Trừ lùi đồng hồ đếm ngược bằng thời gian trôi qua (delta)
+				// Phải ép kiểu (float) vì delta mặc định là double
+				_gatherTimer -= (float)delta; 
+
+				// Khi đồng hồ đếm về 0 hoặc số âm -> Đã đến lúc bổ rìu
+				if (_gatherTimer <= 0.0f)
+				{
+					_gatherTimer = GatherRate;
+
+					if (CurrentTarget is ResourceNode resourceNode)
+					{
+						// Xác định loại tài nguyên TRƯỚC khi gọi TakeResource
+						// vì TakeResource có thể QueueFree() cây → object bị dispose
+						string resourceType = "Wood";
+						if (CurrentTarget.IsInGroup("Gold")) resourceType = "Gold";
+						else if (CurrentTarget.IsInGroup("Food")) resourceType = "Food";
+
+						int amountGot = resourceNode.TakeResource((int)GatherAmount);
+						GD.Print($"[{Name}] Vừa thu thập được {amountGot} tài nguyên!");
+						
+						if (GameManager.Instance != null && amountGot > 0)
+						{
+							GameManager.Instance.AddResource(resourceType, amountGot);
+						}
+
+						// Sau khi TakeResource, cây có thể đã bị QueueFree()
+						// Kiểm tra ngay để tránh frame sau bị ObjectDisposedException
+						if (!IsInstanceValid(CurrentTarget))
+						{
+							GD.Print($"[{Name}] Cây đã hết! Chuyển về trạng thái rảnh rỗi.");
+							CurrentTarget = null;
+							CurrentState = UnitState.Idle;
+						}
+					}
+				}
 				break;
 		}
 	}

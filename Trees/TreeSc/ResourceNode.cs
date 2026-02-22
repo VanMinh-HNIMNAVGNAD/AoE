@@ -3,13 +3,47 @@ using System;
 
 public partial class ResourceNode : StaticBody2D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    // [Export] để bạn có thể chỉnh mỗi cây có bao nhiêu gỗ ngay trong Editor
+    [Export] public int MaxResource = 100; 
+    
+    // Biến lưu trữ số gỗ hiện tại
+    private int _currentResource;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Ready()
+    {
+        // Khi mới sinh ra, cây sẽ đầy ắp tài nguyên
+        _currentResource = MaxResource; 
+    }
+
+    // Hàm này được con Lính gọi mỗi khi nó "vung rìu"
+    // Trả về số lượng tài nguyên thực tế lấy được
+    public int TakeResource(int amount)
+    {
+        int gathered = 0;
+
+        if (_currentResource >= amount)
+        {
+            // Nếu cây còn nhiều gỗ hơn sức chặt của lính
+            _currentResource -= amount;
+            gathered = amount;
+        }
+        else
+        {
+            // Nếu cây sắp hết (ví dụ lính chặt 10, nhưng cây chỉ còn 3 gỗ)
+            gathered = _currentResource;
+            _currentResource = 0;
+        }
+
+        GD.Print($"[CÂY] Bị chặt! Còn lại: {_currentResource}/{MaxResource} gỗ");
+
+        // Kiểm tra xem cây đã cạn kiệt chưa?
+        if (_currentResource <= 0)
+        {
+            GD.Print("[CÂY] Đã hết tài nguyên. Cây đổ!");
+            // QueueFree() là hàm quyền lực nhất Godot dùng để xóa sổ đối tượng khỏi bộ nhớ
+            QueueFree(); 
+        }
+
+        return gathered;
+    }
 }

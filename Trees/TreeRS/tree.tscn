@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://brpf15i175lp8"]
+[gd_scene load_steps=13 format=3 uid="uid://brpf15i175lp8"]
 
+[ext_resource type="Script" uid="uid://d3yt34ldhjyfq" path="res://Trees/TreeSc/ResourceNode.cs" id="1_jcw41"]
 [ext_resource type="Texture2D" uid="uid://cpqxp05mrptvb" path="res://Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree1.png" id="1_m6g87"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bi5d3"]
@@ -67,10 +68,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m6g87"]
-radius = 19.0
-height = 74.0
+radius = 15.0
+height = 40.0
 
 [node name="Pine" type="StaticBody2D" groups=["Resource", "Tree"]]
+script = ExtResource("1_jcw41")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
 sprite_frames = SubResource("SpriteFrames_gvdgx")
@@ -79,7 +81,6 @@ autoplay = "pine tree"
 frame_progress = 0.7197749
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(1, 73)
+position = Vector2(0, 88)
 shape = SubResource("CapsuleShape2D_m6g87")
 debug_color = Color(0.89344764, 0.29844326, 0.3210454, 0.41960785)

@@ -152,31 +152,31 @@ public partial class RTSController : Node2D
 		}
 	}
 	private Node2D GetObjectUnderMouse()
-    {
-        var spaceState = GetWorld2D().DirectSpaceState;
-        var query = new PhysicsPointQueryParameters2D();
-        query.Position = GetGlobalMousePosition();
-        query.CollideWithBodies = true; 
-        query.CollideWithAreas = false;
+	{
+		var spaceState = GetWorld2D().DirectSpaceState;
+		var query = new PhysicsPointQueryParameters2D();
+		query.Position = GetGlobalMousePosition();
+		query.CollideWithBodies = true; 
+		query.CollideWithAreas = false;
 
-        var result = spaceState.IntersectPoint(query);
-        foreach (Godot.Collections.Dictionary item in result)
-    {
-        Node2D collider = (Node2D)item["collider"];
-        
-        // Nếu thấy bất cứ cái nào có thẻ "Resource", ƯU TIÊN chọn nó luôn!
-        if (collider.IsInGroup("Resource"))
-        {
-            return collider;
-        }
-    }
+		var result = spaceState.IntersectPoint(query);
+		foreach (Godot.Collections.Dictionary item in result)
+	{
+		Node2D collider = (Node2D)item["collider"];
+		
+		// Nếu thấy bất cứ cái nào có thẻ "Resource", ƯU TIÊN chọn nó luôn!
+		if (collider.IsInGroup("Resource"))
+		{
+			return collider;
+		}
+	}
 
-    // Nếu không có tài nguyên nào (click ra đất), thì mới trả về cái mặt đất
-    if (result.Count > 0)
-    {
-        return (Node2D)result[0]["collider"];
-    }
+	// Nếu không có tài nguyên nào (click ra đất), thì mới trả về cái mặt đất
+	if (result.Count > 0)
+	{
+		return (Node2D)result[0]["collider"];
+	}
 
-    return null;
-    }
+	return null;
+	}
 }
