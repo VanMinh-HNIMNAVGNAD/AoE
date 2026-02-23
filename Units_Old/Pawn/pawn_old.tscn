@@ -1,8 +1,8 @@
 [gd_scene load_steps=42 format=3 uid="uid://hpjpepqf05im"]
 
-[ext_resource type="Script" uid="uid://cqy5imh4whbkx" path="res://Units_Old/Pawn/SelectableUnit.cs" id="1_51qgs"]
-[ext_resource type="Texture2D" uid="uid://dn61pxjeihtb0" path="res://Tiny Swords (Update 010)/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png" id="1_j4sya"]
-[ext_resource type="Texture2D" uid="uid://ds0fig0wqrfl2" path="res://Tiny Swords (Free Pack)/UI Elements/UI Elements/Cursors/Cursor_04.png" id="2_rjfkn"]
+[ext_resource type="Script" uid="uid://cqy5imh4whbkx" path="res://Units/Base/SelectableUnit.cs" id="1_51qgs"]
+[ext_resource type="Texture2D" uid="uid://dn61pxjeihtb0" path="res://Assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png" id="1_j4sya"]
+[ext_resource type="Texture2D" uid="uid://ds0fig0wqrfl2" path="res://Assets/Tiny Swords (Free Pack)/UI Elements/UI Elements/Cursors/Cursor_04.png" id="2_rjfkn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjfkn"]
 atlas = ExtResource("1_j4sya")

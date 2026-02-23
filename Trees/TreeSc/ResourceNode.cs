@@ -17,6 +17,9 @@ public partial class ResourceNode : StaticBody2D
 
     // Hàm này được con Lính gọi mỗi khi nó "vung rìu"
     // Trả về số lượng tài nguyên thực tế lấy được
+    // [LƯU Ý] Nếu nhiều Pawn cùng chặt 1 cây, hàm này có thể được gọi nhiều lần
+    // trong cùng 1 frame. QueueFree() không xóa ngay mà đợi cuối frame,
+    // nên Pawn thứ 2 vẫn có thể gọi TakeResource() → gathered = 0 (không crash).
     public int TakeResource(int amount)
     {
         int gathered = 0;

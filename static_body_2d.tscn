@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://d3fxxeafvt7na"]
 
-[ext_resource type="Texture2D" uid="uid://bjom7yg8y40t1" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Rocks in the Water/Water Rocks_03.png" id="1_yjt17"]
+[ext_resource type="Texture2D" uid="uid://bjom7yg8y40t1" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks in the Water/Water Rocks_03.png" id="1_yjt17"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ypqmy"]
 atlas = ExtResource("1_yjt17")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=39 format=3 uid="uid://lbv0ud2ii8nu"]
 
-[ext_resource type="Texture2D" uid="uid://b642sbli354pr" path="res://Tiny Swords (Free Pack)/Units/Red Units/Monk/Idle.png" id="1_csui6"]
-[ext_resource type="Texture2D" uid="uid://dyxuv5kmmb43r" path="res://Tiny Swords (Free Pack)/Units/Red Units/Monk/Run.png" id="2_rfrn4"]
-[ext_resource type="Texture2D" uid="uid://db5xwgog7ulbm" path="res://Tiny Swords (Free Pack)/Units/Red Units/Monk/Heal.png" id="3_fnx05"]
-[ext_resource type="Texture2D" uid="uid://bb85h8qcledwl" path="res://Tiny Swords (Free Pack)/Units/Red Units/Monk/Heal_Effect.png" id="4_q0pik"]
+[ext_resource type="Texture2D" uid="uid://b642sbli354pr" path="res://Assets/Tiny Swords (Free Pack)/Units/Red Units/Monk/Idle.png" id="1_csui6"]
+[ext_resource type="Texture2D" uid="uid://dyxuv5kmmb43r" path="res://Assets/Tiny Swords (Free Pack)/Units/Red Units/Monk/Run.png" id="2_rfrn4"]
+[ext_resource type="Texture2D" uid="uid://db5xwgog7ulbm" path="res://Assets/Tiny Swords (Free Pack)/Units/Red Units/Monk/Heal.png" id="3_fnx05"]
+[ext_resource type="Texture2D" uid="uid://bb85h8qcledwl" path="res://Assets/Tiny Swords (Free Pack)/Units/Red Units/Monk/Heal_Effect.png" id="4_q0pik"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oj60w"]
 atlas = ExtResource("1_csui6")

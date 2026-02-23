@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dr8aik53lh3bb"]
 
-[ext_resource type="Texture2D" uid="uid://g76yxy7oja7d" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_01.png" id="1_cpuom"]
+[ext_resource type="Texture2D" uid="uid://g76yxy7oja7d" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_01.png" id="1_cpuom"]
 
 [node name="Cloud" type="Node2D"]
 

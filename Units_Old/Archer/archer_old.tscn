@@ -1,6 +1,6 @@
 [gd_scene load_steps=46 format=3 uid="uid://dl6q1o0kgvxgu"]
 
-[ext_resource type="Texture2D" uid="uid://dp3ccncmgo4v8" path="res://Tiny Swords (Update 010)/Factions/Knights/Troops/Archer/Purple/Archer_Purlple.png" id="1_jrp78"]
+[ext_resource type="Texture2D" uid="uid://dp3ccncmgo4v8" path="res://Assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Archer/Purple/Archer_Purlple.png" id="1_jrp78"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u7om8"]
 atlas = ExtResource("1_jrp78")

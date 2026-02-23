@@ -5,34 +5,34 @@
 [ext_resource type="PackedScene" uid="uid://d3fxxeafvt7na" path="res://static_body_2d.tscn" id="16_waglr"]
 [ext_resource type="PackedScene" uid="uid://dx8h8fnyoftgc" path="res://Trees/TreeRS/maple.tscn" id="16_xiqgv"]
 [ext_resource type="PackedScene" uid="uid://4twtp4oujhgi" path="res://Units/Warrior/warrior.tscn" id="18_mvfa8"]
-[ext_resource type="Texture2D" uid="uid://g76yxy7oja7d" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_01.png" id="22_y1bqn"]
-[ext_resource type="Texture2D" uid="uid://43fajdefmxit" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_06.png" id="23_7dsfl"]
-[ext_resource type="Texture2D" uid="uid://chvby8a1v82iv" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_08.png" id="24_mq4nq"]
-[ext_resource type="Texture2D" uid="uid://cucxh7s3k01mh" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_07.png" id="25_371b6"]
-[ext_resource type="Texture2D" uid="uid://b3o37q4dlirt7" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_05.png" id="26_ao4cr"]
-[ext_resource type="Texture2D" uid="uid://db4nt76eqhcnp" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_04.png" id="27_irg3d"]
-[ext_resource type="Texture2D" uid="uid://dajvb2n8ye5h4" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_03.png" id="28_y8a40"]
-[ext_resource type="Texture2D" uid="uid://cprfiass7rflw" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_02.png" id="29_n1aqv"]
-[ext_resource type="Texture2D" uid="uid://c5u2t2pd01r87" path="res://Tiny Swords (Update 010)/Deco/06.png" id="30_bbwj2"]
-[ext_resource type="Texture2D" uid="uid://cxtif1bw7dcnn" path="res://Tiny Swords (Update 010)/Deco/03.png" id="31_ivfu3"]
-[ext_resource type="Texture2D" uid="uid://drwlko63eqete" path="res://Tiny Swords (Update 010)/Deco/01.png" id="33_fq1sc"]
-[ext_resource type="Texture2D" uid="uid://c1mncmsnccy6u" path="res://Tiny Swords (Update 010)/Deco/14.png" id="34_ivbkn"]
-[ext_resource type="Texture2D" uid="uid://cpbstt1475iel" path="res://Tiny Swords (Update 010)/Deco/15.png" id="35_0fglf"]
-[ext_resource type="Texture2D" uid="uid://dwls4llerpryj" path="res://Tiny Swords (Update 010)/Deco/18.png" id="36_qtjmb"]
-[ext_resource type="Texture2D" uid="uid://c46prgw3f6ygo" path="res://Tiny Swords (Update 010)/Deco/13.png" id="37_wi82k"]
-[ext_resource type="Texture2D" uid="uid://c0cy1gma2p3r1" path="res://Tiny Swords (Update 010)/Deco/11.png" id="38_l7i8q"]
-[ext_resource type="Texture2D" uid="uid://bcw32ddtqukri" path="res://Tiny Swords (Update 010)/Deco/10.png" id="39_7hrk4"]
-[ext_resource type="Texture2D" uid="uid://b777bm72uki16" path="res://Tiny Swords (Update 010)/Deco/09.png" id="40_rfukx"]
-[ext_resource type="Texture2D" uid="uid://ds5oq4fd6b4cf" path="res://Tiny Swords (Update 010)/Deco/08.png" id="41_irs1d"]
-[ext_resource type="Texture2D" uid="uid://d1eflr63p0iso" path="res://Tiny Swords (Update 010)/Deco/07.png" id="42_ofme6"]
+[ext_resource type="Texture2D" uid="uid://g76yxy7oja7d" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_01.png" id="22_y1bqn"]
+[ext_resource type="Texture2D" uid="uid://43fajdefmxit" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_06.png" id="23_7dsfl"]
+[ext_resource type="Texture2D" uid="uid://chvby8a1v82iv" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_08.png" id="24_mq4nq"]
+[ext_resource type="Texture2D" uid="uid://cucxh7s3k01mh" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_07.png" id="25_371b6"]
+[ext_resource type="Texture2D" uid="uid://b3o37q4dlirt7" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_05.png" id="26_ao4cr"]
+[ext_resource type="Texture2D" uid="uid://db4nt76eqhcnp" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_04.png" id="27_irg3d"]
+[ext_resource type="Texture2D" uid="uid://dajvb2n8ye5h4" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_03.png" id="28_y8a40"]
+[ext_resource type="Texture2D" uid="uid://cprfiass7rflw" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Clouds/Clouds_02.png" id="29_n1aqv"]
+[ext_resource type="Texture2D" uid="uid://c5u2t2pd01r87" path="res://Assets/Tiny Swords (Update 010)/Deco/06.png" id="30_bbwj2"]
+[ext_resource type="Texture2D" uid="uid://cxtif1bw7dcnn" path="res://Assets/Tiny Swords (Update 010)/Deco/03.png" id="31_ivfu3"]
+[ext_resource type="Texture2D" uid="uid://drwlko63eqete" path="res://Assets/Tiny Swords (Update 010)/Deco/01.png" id="33_fq1sc"]
+[ext_resource type="Texture2D" uid="uid://c1mncmsnccy6u" path="res://Assets/Tiny Swords (Update 010)/Deco/14.png" id="34_ivbkn"]
+[ext_resource type="Texture2D" uid="uid://cpbstt1475iel" path="res://Assets/Tiny Swords (Update 010)/Deco/15.png" id="35_0fglf"]
+[ext_resource type="Texture2D" uid="uid://dwls4llerpryj" path="res://Assets/Tiny Swords (Update 010)/Deco/18.png" id="36_qtjmb"]
+[ext_resource type="Texture2D" uid="uid://c46prgw3f6ygo" path="res://Assets/Tiny Swords (Update 010)/Deco/13.png" id="37_wi82k"]
+[ext_resource type="Texture2D" uid="uid://c0cy1gma2p3r1" path="res://Assets/Tiny Swords (Update 010)/Deco/11.png" id="38_l7i8q"]
+[ext_resource type="Texture2D" uid="uid://bcw32ddtqukri" path="res://Assets/Tiny Swords (Update 010)/Deco/10.png" id="39_7hrk4"]
+[ext_resource type="Texture2D" uid="uid://b777bm72uki16" path="res://Assets/Tiny Swords (Update 010)/Deco/09.png" id="40_rfukx"]
+[ext_resource type="Texture2D" uid="uid://ds5oq4fd6b4cf" path="res://Assets/Tiny Swords (Update 010)/Deco/08.png" id="41_irs1d"]
+[ext_resource type="Texture2D" uid="uid://d1eflr63p0iso" path="res://Assets/Tiny Swords (Update 010)/Deco/07.png" id="42_ofme6"]
 [ext_resource type="Script" uid="uid://bd07w0g5083yt" path="res://Scripts/GameJoystick/GameManager.cs" id="43_ivfu3"]
-[ext_resource type="Texture2D" uid="uid://beu2k4widukyw" path="res://Tiny Swords (Update 010)/Deco/12.png" id="43_jdyvg"]
-[ext_resource type="Texture2D" uid="uid://dhlshmdqknddg" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock2.png" id="44_0fglf"]
+[ext_resource type="Texture2D" uid="uid://beu2k4widukyw" path="res://Assets/Tiny Swords (Update 010)/Deco/12.png" id="43_jdyvg"]
+[ext_resource type="Texture2D" uid="uid://dhlshmdqknddg" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock2.png" id="44_0fglf"]
 [ext_resource type="PackedScene" uid="uid://cu0ewcjqn6jmd" path="res://Units/pawn/Pawn.tscn" id="44_ivfu3"]
-[ext_resource type="Texture2D" uid="uid://dptxwoox5ps61" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock3.png" id="45_qtjmb"]
-[ext_resource type="Texture2D" uid="uid://cggfgx0xvfbp8" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock4.png" id="46_wi82k"]
+[ext_resource type="Texture2D" uid="uid://dptxwoox5ps61" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock3.png" id="45_qtjmb"]
+[ext_resource type="Texture2D" uid="uid://cggfgx0xvfbp8" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock4.png" id="46_wi82k"]
 [ext_resource type="Script" uid="uid://wsy8goele52x" path="res://Scripts/Core/RtScamera2d.cs" id="47_0fglf"]
-[ext_resource type="Texture2D" uid="uid://qoxn8ujfndby" path="res://Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock1.png" id="47_l7i8q"]
+[ext_resource type="Texture2D" uid="uid://qoxn8ujfndby" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Decorations/Rocks/Rock1.png" id="47_l7i8q"]
 [ext_resource type="Script" uid="uid://plams460o6wi" path="res://Scripts/Core/RTSController.cs" id="48_qtjmb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0fglf"]
@@ -322,10 +322,31 @@ visible = false
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0fglf")
 
+[node name="ResourceBar" type="HBoxContainer" parent="UI"]
+offset_left = 17.0
+offset_top = 14.0
+offset_right = 180.0
+offset_bottom = 54.0
+
+[node name="WoodLabel" type="Label" parent="UI/ResourceBar"]
+layout_mode = 2
+text = "0"
+
+[node name="GoldLabel" type="Label" parent="UI/ResourceBar"]
+layout_mode = 2
+text = "0"
+
+[node name="FoodLabel" type="Label" parent="UI/ResourceBar"]
+layout_mode = 2
+text = "0"
+
 [node name="GameJoy" type="Node" parent="."]
 
-[node name="GameManager" type="Node2D" parent="GameJoy"]
+[node name="GameManager" type="Node2D" parent="GameJoy" node_paths=PackedStringArray("WoodLabel", "GoldLabel", "FoodLabel")]
 script = ExtResource("43_ivfu3")
+WoodLabel = NodePath("../../UI/ResourceBar/WoodLabel")
+GoldLabel = NodePath("../../UI/ResourceBar/GoldLabel")
+FoodLabel = NodePath("../../UI/ResourceBar/FoodLabel")
 
 [node name="RTScamera2D" type="Camera2D" parent="GameJoy"]
 position_smoothing_enabled = true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=35 format=3 uid="uid://cyk3n6jvlm60"]
 
-[ext_resource type="Texture2D" uid="uid://dl84ipf0a534d" path="res://Tiny Swords (Update 010)/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_726yt"]
+[ext_resource type="Texture2D" uid="uid://dl84ipf0a534d" path="res://Assets/Tiny Swords (Update 010)/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_726yt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0f5al"]
 atlas = ExtResource("1_726yt")

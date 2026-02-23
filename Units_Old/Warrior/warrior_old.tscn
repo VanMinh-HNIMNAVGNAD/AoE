@@ -1,6 +1,6 @@
 [gd_scene load_steps=52 format=3 uid="uid://dpqtx04vahtuw"]
 
-[ext_resource type="Texture2D" uid="uid://c47hd2hwqx0cq" path="res://Tiny Swords (Update 010)/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png" id="1_amspb"]
+[ext_resource type="Texture2D" uid="uid://c47hd2hwqx0cq" path="res://Assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png" id="1_amspb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7x4bk"]
 atlas = ExtResource("1_amspb")
