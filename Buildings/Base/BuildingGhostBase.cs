@@ -21,8 +21,11 @@ public partial class BuildingGhostBase : Node2D
 
     public override void _Ready()
     {
-        // [FIX] Đặt ZIndex cao để ghost luôn hiển thị TRÊN tilemap và các object khác
-        ZIndex = 100;
+        // [FIX] Đặt ZIndex = 4096 (giá trị tối đa) + ZAsRelative = false
+        // để ghost LUÔN hiển thị TRÊN mọi TileMapLayer, kể cả tile có z_index offset cao.
+        // ZAsRelative = false → z_index là tuyệt đối, không phụ thuộc parent.
+        ZAsRelative = false;
+        ZIndex = 4096;
 
         if (CollisionArea != null)
         {
