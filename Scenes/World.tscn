@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dibylm54h60po"]
+[gd_scene load_steps=37 format=3 uid="uid://dibylm54h60po"]
 
 [ext_resource type="PackedScene" uid="uid://d1ulmungt24hg" path="res://Maps/map1.tscn" id="1_ao4cr"]
 [ext_resource type="PackedScene" uid="uid://brpf15i175lp8" path="res://Trees/TreeRS/tree.tscn" id="6_45d1s"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://drwlko63eqete" path="res://Assets/Tiny Swords (Update 010)/Deco/01.png" id="33_fq1sc"]
 [ext_resource type="Texture2D" uid="uid://c1mncmsnccy6u" path="res://Assets/Tiny Swords (Update 010)/Deco/14.png" id="34_ivbkn"]
 [ext_resource type="Texture2D" uid="uid://cpbstt1475iel" path="res://Assets/Tiny Swords (Update 010)/Deco/15.png" id="35_0fglf"]
+[ext_resource type="PackedScene" uid="uid://bw6potdl2kmtg" path="res://Building/BaseBuilding/building_ghost_base.tscn" id="35_irg3d"]
 [ext_resource type="Texture2D" uid="uid://dwls4llerpryj" path="res://Assets/Tiny Swords (Update 010)/Deco/18.png" id="36_qtjmb"]
 [ext_resource type="Texture2D" uid="uid://c46prgw3f6ygo" path="res://Assets/Tiny Swords (Update 010)/Deco/13.png" id="37_wi82k"]
 [ext_resource type="Texture2D" uid="uid://c0cy1gma2p3r1" path="res://Assets/Tiny Swords (Update 010)/Deco/11.png" id="38_l7i8q"]
@@ -47,273 +48,8 @@ metadata/_edit_lock_ = true
 
 [node name="Maps" parent="." instance=ExtResource("1_ao4cr")]
 
-[node name="Element" type="Node" parent="."]
-
-[node name="rockinwt" type="Node" parent="Element"]
-
-[node name="rock" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(54, 279)
-metadata/_edit_lock_ = true
-
-[node name="rock2" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(294, 1876)
-metadata/_edit_lock_ = true
-
-[node name="rock3" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1774, 1424)
-metadata/_edit_lock_ = true
-
-[node name="rock4" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1056, 965)
-metadata/_edit_lock_ = true
-
-[node name="rock5" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1100, 1698)
-metadata/_edit_lock_ = true
-
-[node name="rock6" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(3402, 1668)
-metadata/_edit_lock_ = true
-
-[node name="rock7" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(2048, 92)
-metadata/_edit_lock_ = true
-
-[node name="rock8" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(3757, 640)
-metadata/_edit_lock_ = true
-
-[node name="rock9" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(3439, 1979)
-metadata/_edit_lock_ = true
-
-[node name="rock10" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1478, 2149)
-metadata/_edit_lock_ = true
-
-[node name="rock11" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(2387, 1835)
-metadata/_edit_lock_ = true
-
-[node name="rock12" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1507, 777)
-metadata/_edit_lock_ = true
-
-[node name="rock13" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1421, 118)
-metadata/_edit_lock_ = true
-
-[node name="rock14" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1469, 90)
-metadata/_edit_lock_ = true
-
-[node name="rock15" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1838, 494)
-metadata/_edit_lock_ = true
-
-[node name="rock16" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1089, 739)
-metadata/_edit_lock_ = true
-
-[node name="rock17" parent="Element/rockinwt" instance=ExtResource("16_waglr")]
-position = Vector2(1004, 753)
-metadata/_edit_lock_ = true
-
-[node name="Decorations" type="Node" parent="Element"]
-
-[node name="Clouds01" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(619, -82)
-texture = ExtResource("22_y1bqn")
-
-[node name="Clouds06" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(58, 1564)
-texture = ExtResource("23_7dsfl")
-
-[node name="Clouds08" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(225, 1698)
-texture = ExtResource("24_mq4nq")
-
-[node name="Clouds07" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(138, 1731)
-texture = ExtResource("25_371b6")
-
-[node name="Clouds02" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2811, -10)
-texture = ExtResource("22_y1bqn")
-
-[node name="Clouds09" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(158, 1794)
-texture = ExtResource("24_mq4nq")
-
-[node name="Clouds05" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3028.0002, 1527)
-scale = Vector2(0.6180556, 0.5078125)
-texture = ExtResource("26_ao4cr")
-
-[node name="Clouds04" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2931, 1555)
-texture = ExtResource("27_irg3d")
-
-[node name="Clouds03" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3056, 1580)
-texture = ExtResource("28_y8a40")
-
-[node name="Clouds10" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3787, 2061)
-texture = ExtResource("25_371b6")
-
-[node name="Clouds11" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(1439, 1769)
-texture = ExtResource("24_mq4nq")
-
-[node name="Clouds12" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(1483, 1739)
-texture = ExtResource("28_y8a40")
-
-[node name="Clouds13" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(1614, 1182)
-texture = ExtResource("27_irg3d")
-
-[node name="Clouds14" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(1673, 1234)
-texture = ExtResource("29_n1aqv")
-
-[node name="06" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(1273, 2165)
-texture = ExtResource("30_bbwj2")
-
-[node name="03" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2338, 1929)
-texture = ExtResource("31_ivfu3")
-
-[node name="01" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2358, 1946)
-texture = ExtResource("33_fq1sc")
-
-[node name="14" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3654, 2138)
-texture = ExtResource("34_ivbkn")
-
-[node name="15" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3665, 2110)
-texture = ExtResource("35_0fglf")
-
-[node name="18" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3633, 2048)
-scale = Vector2(0.5, 0.375)
-texture = ExtResource("36_qtjmb")
-
-[node name="13" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3468, 1851)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("37_wi82k")
-
-[node name="16" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3458.0002, 1852)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("37_wi82k")
-
-[node name="11" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2625, 1823)
-texture = ExtResource("38_l7i8q")
-
-[node name="10" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2623, 1842)
-texture = ExtResource("39_7hrk4")
-
-[node name="09" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2894, 1755)
-texture = ExtResource("40_rfukx")
-
-[node name="12" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3186, 1764)
-texture = ExtResource("40_rfukx")
-
-[node name="08" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3167, 1789)
-texture = ExtResource("41_irs1d")
-
-[node name="07" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3195, 1801)
-texture = ExtResource("42_ofme6")
-
-[node name="17" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3202, 1778)
-texture = ExtResource("35_0fglf")
-
-[node name="19" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2586, 1314)
-texture = ExtResource("43_jdyvg")
-
-[node name="20" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2707, 1689)
-texture = ExtResource("39_7hrk4")
-
-[node name="21" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2719, 1697)
-texture = ExtResource("39_7hrk4")
-
-[node name="22" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2734, 1693)
-texture = ExtResource("39_7hrk4")
-
-[node name="23" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2751, 1691)
-texture = ExtResource("39_7hrk4")
-
-[node name="24" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2443, 1325)
-texture = ExtResource("39_7hrk4")
-
-[node name="25" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2461, 1347)
-texture = ExtResource("39_7hrk4")
-
-[node name="26" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(2564, 1310)
-texture = ExtResource("39_7hrk4")
-
-[node name="27" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3634, 707)
-texture = ExtResource("41_irs1d")
-
-[node name="Rock2" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3095, 808)
-texture = ExtResource("44_0fglf")
-
-[node name="Rock3" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3071, 817)
-texture = ExtResource("45_qtjmb")
-
-[node name="Rock4" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3113, 827)
-texture = ExtResource("46_wi82k")
-
-[node name="Rock1" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3094, 810)
-texture = ExtResource("47_l7i8q")
-
-[node name="04" type="Sprite2D" parent="Element/Decorations"]
-position = Vector2(3650, 705)
-texture = ExtResource("31_ivfu3")
-
-[node name="Trees" type="Node" parent="Element"]
-
-[node name="Pine" parent="Element/Trees" instance=ExtResource("6_45d1s")]
-position = Vector2(496, 48)
-
-[node name="maple" parent="Element/Trees" instance=ExtResource("16_xiqgv")]
-position = Vector2(297, 61)
-
-[node name="Char" type="Node" parent="Element"]
-
-[node name="Warrior" parent="Element/Char" instance=ExtResource("18_mvfa8")]
-position = Vector2(375, 123)
-scale = Vector2(1, 1)
-
-[node name="Pawn" parent="Element/Char" instance=ExtResource("44_ivfu3")]
-position = Vector2(376, 181)
-scale = Vector2(1, 1)
+[node name="NavPath" parent="Maps" index="8"]
+visible = false
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -340,19 +76,291 @@ text = "0"
 layout_mode = 2
 text = "0"
 
-[node name="GameJoy" type="Node" parent="."]
+[node name="GameSetUp" type="Node" parent="."]
 
-[node name="GameManager" type="Node2D" parent="GameJoy" node_paths=PackedStringArray("WoodLabel", "GoldLabel", "FoodLabel")]
+[node name="GameManager" type="Node2D" parent="GameSetUp" node_paths=PackedStringArray("WoodLabel", "GoldLabel", "FoodLabel")]
 script = ExtResource("43_ivfu3")
 WoodLabel = NodePath("../../UI/ResourceBar/WoodLabel")
 GoldLabel = NodePath("../../UI/ResourceBar/GoldLabel")
 FoodLabel = NodePath("../../UI/ResourceBar/FoodLabel")
 
-[node name="RTScamera2D" type="Camera2D" parent="GameJoy"]
+[node name="RTScamera2D" type="Camera2D" parent="GameSetUp"]
 position_smoothing_enabled = true
 script = ExtResource("47_0fglf")
 Speed = 700.0
 
-[node name="RTSController" type="Node2D" parent="GameJoy" node_paths=PackedStringArray("SelectionPanel")]
+[node name="RTSController" type="Node2D" parent="GameSetUp" node_paths=PackedStringArray("SelectionPanel")]
 script = ExtResource("48_qtjmb")
 SelectionPanel = NodePath("../../UI/SelectionBox")
+
+[node name="Units" type="Node" parent="."]
+
+[node name="Warrior" parent="Units" instance=ExtResource("18_mvfa8")]
+position = Vector2(375, 123)
+scale = Vector2(1, 1)
+
+[node name="Pawn" parent="Units" instance=ExtResource("44_ivfu3")]
+position = Vector2(376, 181)
+scale = Vector2(1, 1)
+
+[node name="Environment" type="Node" parent="." groups=["Colli"]]
+
+[node name="rockinwt" type="Node" parent="Environment"]
+
+[node name="rock" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(54, 279)
+metadata/_edit_lock_ = true
+
+[node name="rock2" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(294, 1876)
+metadata/_edit_lock_ = true
+
+[node name="rock3" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1774, 1424)
+metadata/_edit_lock_ = true
+
+[node name="rock4" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1056, 965)
+metadata/_edit_lock_ = true
+
+[node name="rock5" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1100, 1698)
+metadata/_edit_lock_ = true
+
+[node name="rock6" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(3402, 1668)
+metadata/_edit_lock_ = true
+
+[node name="rock7" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(2048, 92)
+metadata/_edit_lock_ = true
+
+[node name="rock8" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(3757, 640)
+metadata/_edit_lock_ = true
+
+[node name="rock9" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(3439, 1979)
+metadata/_edit_lock_ = true
+
+[node name="rock10" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1478, 2149)
+metadata/_edit_lock_ = true
+
+[node name="rock11" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(2387, 1835)
+metadata/_edit_lock_ = true
+
+[node name="rock12" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1507, 777)
+metadata/_edit_lock_ = true
+
+[node name="rock13" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1421, 118)
+metadata/_edit_lock_ = true
+
+[node name="rock14" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1469, 90)
+metadata/_edit_lock_ = true
+
+[node name="rock15" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1838, 494)
+metadata/_edit_lock_ = true
+
+[node name="rock16" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1089, 739)
+metadata/_edit_lock_ = true
+
+[node name="rock17" parent="Environment/rockinwt" instance=ExtResource("16_waglr")]
+position = Vector2(1004, 753)
+metadata/_edit_lock_ = true
+
+[node name="Decorations" type="Node" parent="Environment"]
+
+[node name="Clouds01" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(619, -82)
+texture = ExtResource("22_y1bqn")
+
+[node name="Clouds06" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(58, 1564)
+texture = ExtResource("23_7dsfl")
+
+[node name="Clouds08" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(225, 1698)
+texture = ExtResource("24_mq4nq")
+
+[node name="Clouds07" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(138, 1731)
+texture = ExtResource("25_371b6")
+
+[node name="Clouds02" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2811, -10)
+texture = ExtResource("22_y1bqn")
+
+[node name="Clouds09" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(158, 1794)
+texture = ExtResource("24_mq4nq")
+
+[node name="Clouds05" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3028.0002, 1527)
+scale = Vector2(0.6180556, 0.5078125)
+texture = ExtResource("26_ao4cr")
+
+[node name="Clouds04" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2931, 1555)
+texture = ExtResource("27_irg3d")
+
+[node name="Clouds03" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3056, 1580)
+texture = ExtResource("28_y8a40")
+
+[node name="Clouds10" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3787, 2061)
+texture = ExtResource("25_371b6")
+
+[node name="Clouds11" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(1439, 1769)
+texture = ExtResource("24_mq4nq")
+
+[node name="Clouds12" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(1483, 1739)
+texture = ExtResource("28_y8a40")
+
+[node name="Clouds13" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(1614, 1182)
+texture = ExtResource("27_irg3d")
+
+[node name="Clouds14" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(1673, 1234)
+texture = ExtResource("29_n1aqv")
+
+[node name="06" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(1273, 2165)
+texture = ExtResource("30_bbwj2")
+
+[node name="03" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2338, 1929)
+texture = ExtResource("31_ivfu3")
+
+[node name="01" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2358, 1946)
+texture = ExtResource("33_fq1sc")
+
+[node name="14" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3654, 2138)
+texture = ExtResource("34_ivbkn")
+
+[node name="15" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3665, 2110)
+texture = ExtResource("35_0fglf")
+
+[node name="18" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3633, 2048)
+scale = Vector2(0.5, 0.375)
+texture = ExtResource("36_qtjmb")
+
+[node name="13" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3468, 1851)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("37_wi82k")
+
+[node name="16" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3458.0002, 1852)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("37_wi82k")
+
+[node name="11" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2625, 1823)
+texture = ExtResource("38_l7i8q")
+
+[node name="10" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2623, 1842)
+texture = ExtResource("39_7hrk4")
+
+[node name="09" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2894, 1755)
+texture = ExtResource("40_rfukx")
+
+[node name="12" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3186, 1764)
+texture = ExtResource("40_rfukx")
+
+[node name="08" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3167, 1789)
+texture = ExtResource("41_irs1d")
+
+[node name="07" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3195, 1801)
+texture = ExtResource("42_ofme6")
+
+[node name="17" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3202, 1778)
+texture = ExtResource("35_0fglf")
+
+[node name="19" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2586, 1314)
+texture = ExtResource("43_jdyvg")
+
+[node name="20" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2707, 1689)
+texture = ExtResource("39_7hrk4")
+
+[node name="21" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2719, 1697)
+texture = ExtResource("39_7hrk4")
+
+[node name="22" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2734, 1693)
+texture = ExtResource("39_7hrk4")
+
+[node name="23" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2751, 1691)
+texture = ExtResource("39_7hrk4")
+
+[node name="24" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2443, 1325)
+texture = ExtResource("39_7hrk4")
+
+[node name="25" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2461, 1347)
+texture = ExtResource("39_7hrk4")
+
+[node name="26" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(2564, 1310)
+texture = ExtResource("39_7hrk4")
+
+[node name="27" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3634, 707)
+texture = ExtResource("41_irs1d")
+
+[node name="Rock2" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3095, 808)
+texture = ExtResource("44_0fglf")
+
+[node name="Rock3" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3071, 817)
+texture = ExtResource("45_qtjmb")
+
+[node name="Rock4" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3113, 827)
+texture = ExtResource("46_wi82k")
+
+[node name="Rock1" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3094, 810)
+texture = ExtResource("47_l7i8q")
+
+[node name="04" type="Sprite2D" parent="Environment/Decorations"]
+position = Vector2(3650, 705)
+texture = ExtResource("31_ivfu3")
+
+[node name="Trees" type="Node" parent="Environment"]
+
+[node name="Pine" parent="Environment/Trees" instance=ExtResource("6_45d1s")]
+position = Vector2(496, 48)
+
+[node name="maple" parent="Environment/Trees" instance=ExtResource("16_xiqgv")]
+position = Vector2(297, 61)
+
+[node name="BuildingGhostBase" parent="." instance=ExtResource("35_irg3d")]
+
+[editable path="Maps"]

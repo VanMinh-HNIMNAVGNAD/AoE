@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw6potdl2kmtg"]
+
+[ext_resource type="Script" uid="uid://tfahl64807p5" path="res://Building/BaseBuilding/BuildingGhostBase.cs" id="1_c44vy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c44vy"]
+radius = 45.044422
+
+[node name="BuildingGhostBase" type="Node2D" node_paths=PackedStringArray("GhostSprite", "CollisionArea")]
+script = ExtResource("1_c44vy")
+GhostSprite = NodePath("GhostSprite")
+CollisionArea = NodePath("CollisionArea")
+
+[node name="GhostSprite" type="Sprite2D" parent="."]
+
+[node name="CollisionArea" type="Area2D" parent="."]
+
+[node name="CollisionArea" type="CollisionShape2D" parent="CollisionArea"]
+shape = SubResource("CircleShape2D_c44vy")

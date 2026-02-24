@@ -71,7 +71,7 @@ animations = [{
 radius = 15.0
 height = 40.0
 
-[node name="Pine" type="StaticBody2D" groups=["Resource", "Tree"]]
+[node name="Pine" type="StaticBody2D" groups=["Colli", "Resource", "Tree"]]
 script = ExtResource("1_jcw41")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
@@ -81,6 +81,7 @@ autoplay = "pine tree"
 frame_progress = 0.7197749
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 88)
 shape = SubResource("CapsuleShape2D_m6g87")
 debug_color = Color(0.89344764, 0.29844326, 0.3210454, 0.41960785)
