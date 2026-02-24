@@ -1,38 +1,38 @@
-[gd_scene load_steps=13 format=3 uid="uid://dx8h8fnyoftgc"]
+[gd_scene load_steps=13 format=3 uid="uid://c68es2jcq5hs5"]
 
-[ext_resource type="Texture2D" uid="uid://13wiac0u5wbw" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree3.png" id="1_6qyuc"]
-[ext_resource type="Script" uid="uid://d3yt34ldhjyfq" path="res://Trees/TreeSc/ResourceNode.cs" id="1_cpeic"]
+[ext_resource type="Script" uid="uid://d3yt34ldhjyfq" path="res://Resources/ResourceNode.cs" id="1_yt7tu"]
+[ext_resource type="Texture2D" uid="uid://13wiac0u5wbw" path="res://Assets/Tiny Swords (Free Pack)/Terrain/Resources/Wood/Trees/Tree3.png" id="2_74i1w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gr0y"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(0, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33mre"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(192, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gp1y5"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3676m"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(576, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gq7fm"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(768, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ryh4h"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbrw2"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(1152, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pcirt"]
-atlas = ExtResource("1_6qyuc")
+atlas = ExtResource("2_74i1w")
 region = Rect2(1344, 0, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3o3af"]
@@ -68,12 +68,13 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6qyuc"]
-radius = 8.333333
+radius = 11.666666
+height = 83.333336
 
 [node name="maple" type="StaticBody2D" groups=["Colli", "Resource", "Tree"]]
 texture_filter = 1
 scale = Vector2(0.6, 0.6)
-script = ExtResource("1_cpeic")
+script = ExtResource("1_yt7tu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
 sprite_frames = SubResource("SpriteFrames_3o3af")
@@ -83,6 +84,6 @@ frame_progress = 0.17289108
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0, 53.333332)
+position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_6qyuc")
 debug_color = Color(0.8110221, 0.37546372, 0.45316184, 0.41960785)

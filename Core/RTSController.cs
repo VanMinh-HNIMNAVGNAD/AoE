@@ -22,6 +22,10 @@ public partial class RTSController : Node2D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		// Nếu đang ở chế độ xây dựng → không xử lý input chọn lính / ra lệnh
+		if (GameManager.Instance != null && GameManager.Instance.IsBuildMode)
+			return;
+
 		if (@event is InputEventMouseButton mouseEvent)
 		{
 			if (mouseEvent.ButtonIndex == MouseButton.Left)

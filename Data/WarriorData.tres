@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://cmgwbr8jkepth"]
 
-[ext_resource type="Script" uid="uid://cn5dkmxan07vc" path="res://Scripts/EntityData/UnitsData.cs" id="1_5tjyr"]
+[ext_resource type="Script" uid="uid://cn5dkmxan07vc" path="res://Data/UnitsData.cs" id="1_5tjyr"]
 
 [resource]
 script = ExtResource("1_5tjyr")
 MaxSpeed = 400.0
-EntityName = "Linh canh "
+EntityName = "Linh canh"
 MaxHealth = 150

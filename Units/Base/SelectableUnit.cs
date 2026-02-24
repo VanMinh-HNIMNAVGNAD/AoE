@@ -91,8 +91,12 @@ public partial class SelectableUnit : CharacterBody2D
 				
 			case UnitState.MoveToInteract:
 				if (AnimSprite != null) AnimSprite.Play("run");
-				if (!IsInstanceValid(CurrentTarget))
+				// [FIX] Kiểm tra target còn tồn tại + kiểm tra ResourceNode.IsExhausted
+				// QueueFree() là deferred → IsInstanceValid vẫn trả true trong cùng frame
+				// → dùng IsExhausted để phát hiện ngay lập tức, không đi đến cây đã cạn
+				if (!IsInstanceValid(CurrentTarget) || IsTargetExhaustedResource(CurrentTarget))
 				{
+					CurrentTarget = null; // [FIX] Clear reference tránh dangling pointer
 					CurrentState = UnitState.Idle;
 					break;
 				}
@@ -175,6 +179,16 @@ public partial class SelectableUnit : CharacterBody2D
 		IndicatorSprite.Scale = finalScale;
 	}
 
+	/// <summary>
+	/// Kiểm tra xem target có phải ResourceNode đã cạn kiệt hay không.
+	/// Dùng trong MoveToInteract để dừng di chuyển ngay khi tài nguyên bị Pawn khác khai thác hết,
+	/// thay vì đợi đến cuối frame (khi QueueFree thực sự xóa node).
+	/// </summary>
+	protected bool IsTargetExhaustedResource(Node2D target)
+	{
+		return target is ResourceNode res && res.IsExhausted;
+	}
+
 	private void HandleMovement()
 	{
 		if (NavAgent == null || NavAgent.IsNavigationFinished())
@@ -182,7 +196,15 @@ public partial class SelectableUnit : CharacterBody2D
 			return;
 		}
 
+		// Chờ nav mesh sẵn sàng trước khi di chuyển
+		// Nếu chưa có nav mesh, GetNextPathPosition() trả về vị trí hiện tại → unit đứng yên
 		Vector2 nextPathPosition = NavAgent.GetNextPathPosition();
+		if (nextPathPosition.DistanceTo(GlobalPosition) < 1.0f && !NavAgent.IsNavigationFinished())
+		{
+			// Nav mesh chưa sẵn sàng hoặc không tìm được đường → thử cập nhật target
+			NavAgent.TargetPosition = NavAgent.TargetPosition;
+			return;
+		}
 		Vector2 newVelocity = GlobalPosition.DirectionTo(nextPathPosition) * MoveSpeed;
 
 		if (NavAgent.AvoidanceEnabled)

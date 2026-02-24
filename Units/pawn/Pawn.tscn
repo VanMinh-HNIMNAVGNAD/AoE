@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dphwadiyoskhh" path="res://Units/Base/base_units.tscn" id="1_xjn8g"]
 [ext_resource type="Texture2D" uid="uid://btwrtjucuw8qo" path="res://Assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Pawn/Red/Pawn_Red.png" id="2_skx7r"]
-[ext_resource type="Script" uid="uid://3ut0roii5reh" path="res://Units/pawn/Pawn.cs" id="3_pawn_script"]
-[ext_resource type="Resource" uid="uid://deyu7edao4k62" path="res://DataGameSet/PawnRS/PawnRS.tres" id="4_pawn_stats"]
+[ext_resource type="Script" uid="uid://3ut0roii5reh" path="res://Units/Pawn/Pawn.cs" id="3_pawn_script"]
+[ext_resource type="Resource" uid="uid://deyu7edao4k62" path="res://Data/PawnData.tres" id="4_pawn_stats"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_smiw0"]
 atlas = ExtResource("2_skx7r")
@@ -294,6 +294,7 @@ animations = [{
 script = ExtResource("3_pawn_script")
 Stats = ExtResource("4_pawn_stats")
 AnimSprite = NodePath("anima")
+
 
 [node name="anima" type="AnimatedSprite2D" parent="." index="0"]
 scale = Vector2(0.5, 0.5)

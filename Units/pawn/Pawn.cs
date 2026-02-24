@@ -25,7 +25,9 @@ public partial class Pawn : SelectableUnit
 		Velocity = Vector2.Zero; 
 
 		// Bước 0: Kiểm tra mục tiêu còn tồn tại không (cây có thể đã bị QueueFree)
-		if (!IsInstanceValid(CurrentTarget))
+		// [FIX] Thêm kiểm tra IsExhausted — vì QueueFree() là deferred,
+		// IsInstanceValid vẫn trả true trong cùng frame → dùng IsExhausted để phát hiện ngay.
+		if (!IsInstanceValid(CurrentTarget) || IsTargetExhaustedResource(CurrentTarget))
 		{
 			CurrentState = UnitState.Idle;
 			CurrentTarget = null;
@@ -47,13 +49,21 @@ public partial class Pawn : SelectableUnit
 
 			if (CurrentTarget is ResourceNode resourceNode)
 			{
+				// [FIX] Kiểm tra IsExhausted TRƯỚC khi gọi TakeResource
+				// Tránh trường hợp Pawn khác đã khai thác hết trong cùng frame
+				if (resourceNode.IsExhausted)
+				{
+					CurrentTarget = null;
+					CurrentState = UnitState.Idle;
+					return;
+				}
+
 				// Xác định loại tài nguyên dựa trên group của mục tiêu
 				string resourceType = "Wood"; // Mặc định là gỗ
 				if (CurrentTarget.IsInGroup("Gold")) resourceType = "Gold";
 				else if (CurrentTarget.IsInGroup("Food")) resourceType = "Food";
 
-				// [LƯU Ý] TakeResource có thể gọi QueueFree() bên trong nếu cây hết
-				// → sau dòng này CurrentTarget có thể không còn valid
+				// TakeResource sẽ trả 0 nếu cây đã cạn (IsExhausted guard bên trong)
 				int amountGot = resourceNode.TakeResource((int)gatherAmount);
 				
 				if (GameManager.Instance != null && amountGot > 0)
@@ -61,8 +71,10 @@ public partial class Pawn : SelectableUnit
 					GameManager.Instance.AddResource(resourceType, amountGot);
 				}
 
-				// Kiểm tra lại sau khi TakeResource — cây có thể đã bị xóa
-				if (!IsInstanceValid(CurrentTarget))
+				// [FIX] Dùng IsExhausted thay vì IsInstanceValid
+				// Vì QueueFree() deferred → IsInstanceValid trả true trong cùng frame
+				// → check cũ luôn bỏ qua → Pawn ở Action thêm 1 frame thừa
+				if (resourceNode.IsExhausted || !IsInstanceValid(CurrentTarget))
 				{
 					CurrentTarget = null;
 					CurrentState = UnitState.Idle;

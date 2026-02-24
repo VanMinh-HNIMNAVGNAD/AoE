@@ -9,6 +9,14 @@ public partial class ResourceNode : StaticBody2D
     // Biến lưu trữ số gỗ hiện tại
     private int _currentResource;
 
+    /// <summary>
+    /// Cờ đánh dấu tài nguyên đã cạn kiệt.
+    /// Dùng để tránh race condition khi nhiều Pawn cùng chặt:
+    /// QueueFree() là deferred (cuối frame mới xóa) nên IsInstanceValid
+    /// vẫn trả true trong cùng frame → cần cờ này để chặn ngay lập tức.
+    /// </summary>
+    public bool IsExhausted { get; private set; } = false;
+
     public override void _Ready()
     {
         // Khi mới sinh ra, cây sẽ đầy ắp tài nguyên
@@ -22,29 +30,22 @@ public partial class ResourceNode : StaticBody2D
     // nên Pawn thứ 2 vẫn có thể gọi TakeResource() → gathered = 0 (không crash).
     public int TakeResource(int amount)
     {
-        int gathered = 0;
+        // [FIX] Nếu cây đã cạn kiệt (đã gọi QueueFree ở frame trước hoặc cùng frame)
+        // → trả 0 ngay lập tức, tránh double QueueFree và tính tài nguyên sai.
+        if (IsExhausted) return 0;
 
-        if (_currentResource >= amount)
-        {
-            // Nếu cây còn nhiều gỗ hơn sức chặt của lính
-            _currentResource -= amount;
-            gathered = amount;
-        }
-        else
-        {
-            // Nếu cây sắp hết (ví dụ lính chặt 10, nhưng cây chỉ còn 3 gỗ)
-            gathered = _currentResource;
-            _currentResource = 0;
-        }
+        // Dùng Mathf.Min để lấy số lượng thực tế có thể khai thác
+        int gathered = Mathf.Min(amount, _currentResource);
+        _currentResource -= gathered;
 
         GD.Print($"[CÂY] Bị chặt! Còn lại: {_currentResource}/{MaxResource} gỗ");
 
         // Kiểm tra xem cây đã cạn kiệt chưa?
         if (_currentResource <= 0)
         {
+            IsExhausted = true; // Đánh dấu TRƯỚC QueueFree → Pawn đọc được ngay trong cùng frame
             GD.Print("[CÂY] Đã hết tài nguyên. Cây đổ!");
-            // QueueFree() là hàm quyền lực nhất Godot dùng để xóa sổ đối tượng khỏi bộ nhớ
-            QueueFree(); 
+            QueueFree();
         }
 
         return gathered;

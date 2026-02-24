@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RtScamera2d : Camera2D
+public partial class RTSCamera : Camera2D
 {
 
 	[Export] public float Speed = 300.0f;

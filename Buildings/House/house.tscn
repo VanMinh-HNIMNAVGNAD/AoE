@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdoxiqg5d8o60"]
+
+[ext_resource type="PackedScene" uid="uid://dgfx6ek61mn3h" path="res://Buildings/Base/building_ghost_base.tscn" id="1_3jav3"]
+[ext_resource type="Texture2D" uid="uid://o10qf1ocqdww" path="res://Assets/Tiny Swords (Free Pack)/Buildings/Black Buildings/House2.png" id="1_xbafe"]
+[ext_resource type="Texture2D" uid="uid://mdboiwh7yhup" path="res://Assets/Tiny Swords (Free Pack)/Buildings/Black Buildings/House3.png" id="2_k1n7v"]
+[ext_resource type="Texture2D" uid="uid://bk4i3acyvc8ku" path="res://Assets/Tiny Swords (Free Pack)/Buildings/Black Buildings/House1.png" id="3_yq6n5"]
+
+[node name="House" instance=ExtResource("1_3jav3")]
+BuildingTextures = Array[Texture2D]([ExtResource("1_xbafe"), ExtResource("2_k1n7v"), ExtResource("3_yq6n5")])
+
+[node name="GhostSprite" parent="." index="0"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_yq6n5")

@@ -1,9 +1,9 @@
-[gd_scene load_steps=48 format=3 uid="uid://4twtp4oujhgi"]
+[gd_scene load_steps=48 format=3 uid="uid://dev36x721bhbn"]
 
 [ext_resource type="PackedScene" uid="uid://dphwadiyoskhh" path="res://Units/Base/base_units.tscn" id="1_7x4bk"]
 [ext_resource type="Texture2D" uid="uid://c47hd2hwqx0cq" path="res://Assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Warrior/Yellow/Warrior_Yellow.png" id="1_amspb"]
 [ext_resource type="Script" uid="uid://b1awuvdwh0e58" path="res://Units/Warrior/Warrior.cs" id="3_warrior_script"]
-[ext_resource type="Resource" uid="uid://cmgwbr8jkepth" path="res://DataGameSet/WarriorRS/Warrior.tres" id="4_warrior_stats"]
+[ext_resource type="Resource" uid="uid://cmgwbr8jkepth" path="res://Data/WarriorData.tres" id="4_warrior_stats"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ygcf"]
 atlas = ExtResource("1_amspb")
