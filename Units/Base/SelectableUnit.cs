@@ -55,17 +55,25 @@ public partial class SelectableUnit : CharacterBody2D
 	public virtual bool CanInteractWith(Node2D target) { return false; }
 	protected virtual void PerformAction(double delta) { }
 
+	// [FIX] Timer chống kẹt: nếu unit không tiến được sau N giây, force idle
+	private float _stuckTimer = 0.0f;
+	private const float STUCK_TIMEOUT = 2.0f;
+	private Vector2 _lastProgressPosition;
+
 	public override void _Ready()
 	{
 		if (IndicatorSprite != null) IndicatorSprite.Visible = false;
 
 		if (NavAgent != null)
 		{
-			NavAgent.PathDesiredDistance = 4.0f;
-			NavAgent.TargetDesiredDistance = 4.0f;
+			// [FIX] Tăng khoảng cách waypoint lên 12px — giá trị cũ (4px) quá nhỏ
+			// khiến unit overshoot rồi oscillate qua lại quanh waypoint
+			NavAgent.PathDesiredDistance = 12.0f;
+			NavAgent.TargetDesiredDistance = 12.0f;
 			NavAgent.VelocityComputed += OnVelocityComputed;
 		}
 
+		_lastProgressPosition = GlobalPosition;
 		CallDeferred(nameof(ApplyBoxScale));
 	}
 
@@ -79,6 +87,9 @@ public partial class SelectableUnit : CharacterBody2D
 		switch (CurrentState)
 		{
 			case UnitState.Idle:
+				// [FIX] Reset velocity khi Idle — trước đây velocity cũ vẫn còn
+				// khiến unit trôi thêm 1-2 frame sau khi dừng
+				Velocity = Vector2.Zero;
 				if (AnimSprite != null) AnimSprite.Play("idle");
 				break;
 				
@@ -86,32 +97,45 @@ public partial class SelectableUnit : CharacterBody2D
 				if (AnimSprite != null) AnimSprite.Play("run");
 				HandleMovement();
 				// [FIX] Thêm null check cho NavAgent — tránh NullReferenceException
-				if (NavAgent != null && NavAgent.IsNavigationFinished()) CurrentState = UnitState.Idle;
+				if (NavAgent != null && NavAgent.IsNavigationFinished())
+				{
+					Velocity = Vector2.Zero;
+					CurrentState = UnitState.Idle;
+				}
+				// [FIX] Phát hiện kẹt: nếu di chuyển nhưng vị trí không đổi > 2s → dừng
+				else
+				{
+					CheckStuck(delta);
+				}
 				break;
 				
 			case UnitState.MoveToInteract:
 				if (AnimSprite != null) AnimSprite.Play("run");
 				// [FIX] Kiểm tra target còn tồn tại + kiểm tra ResourceNode.IsExhausted
-				// QueueFree() là deferred → IsInstanceValid vẫn trả true trong cùng frame
-				// → dùng IsExhausted để phát hiện ngay lập tức, không đi đến cây đã cạn
 				if (!IsInstanceValid(CurrentTarget) || IsTargetExhaustedResource(CurrentTarget))
 				{
-					CurrentTarget = null; // [FIX] Clear reference tránh dangling pointer
+					CurrentTarget = null;
+					Velocity = Vector2.Zero;
 					CurrentState = UnitState.Idle;
 					break;
 				}
 
-				// [FIX] Thêm null check cho Stats — tránh NullReferenceException khi chưa gán trong Inspector
+				// [FIX] Cập nhật lại đích đến của NavAgent theo vị trí mới nhất của target
+				// Trước đây chỉ set 1 lần trong SetInteractTarget → nếu target di chuyển,
+				// unit vẫn đi đến vị trí cũ
+				NavAgent.TargetPosition = CurrentTarget.GlobalPosition;
+
 				float interactRange = Stats != null ? Stats.InteractionRange : 60.0f;
 				float distanceToTarget = GlobalPosition.DistanceTo(CurrentTarget.GlobalPosition);
 				if (distanceToTarget <= interactRange)
 				{
 					Velocity = Vector2.Zero;
-					CurrentState = UnitState.Action; // Chuyển sang trạng thái Hành Động
+					CurrentState = UnitState.Action;
 				}
 				else
 				{
 					HandleMovement();
+					CheckStuck(delta);
 				}
 				break;
 				
@@ -127,8 +151,14 @@ public partial class SelectableUnit : CharacterBody2D
 		if (NavAgent != null)
 		{
 			CurrentTarget = null;
+			// [FIX] Reset velocity trước khi gán đích mới
+			// Trước đây velocity cũ vẫn còn → unit lao 1 frame theo hướng cũ
+			Velocity = Vector2.Zero;
 			NavAgent.TargetPosition = targetPosition;
 			CurrentState = UnitState.Move;
+			// [FIX] Reset stuck timer khi nhận lệnh mới
+			_stuckTimer = 0.0f;
+			_lastProgressPosition = GlobalPosition;
 		}
 	}
 
@@ -142,8 +172,12 @@ public partial class SelectableUnit : CharacterBody2D
 				return;
 			}
 			CurrentTarget = target;
+			// [FIX] Reset velocity + stuck timer khi nhận lệnh mới
+			Velocity = Vector2.Zero;
 			NavAgent.TargetPosition = target.GlobalPosition;
 			CurrentState = UnitState.MoveToInteract;
+			_stuckTimer = 0.0f;
+			_lastProgressPosition = GlobalPosition;
 		}
 	}
 
@@ -189,22 +223,53 @@ public partial class SelectableUnit : CharacterBody2D
 		return target is ResourceNode res && res.IsExhausted;
 	}
 
+	/// <summary>
+	/// Kiểm tra unit có bị kẹt không (di chuyển nhưng vị trí không thay đổi).
+	/// Nếu kẹt quá STUCK_TIMEOUT giây → force về Idle.
+	/// </summary>
+	private void CheckStuck(double delta)
+	{
+		const float PROGRESS_THRESHOLD = 8.0f; // Phải di chuyển ít nhất 8px để tính là "tiến được"
+		if (GlobalPosition.DistanceTo(_lastProgressPosition) > PROGRESS_THRESHOLD)
+		{
+			_lastProgressPosition = GlobalPosition;
+			_stuckTimer = 0.0f;
+		}
+		else
+		{
+			_stuckTimer += (float)delta;
+			if (_stuckTimer >= STUCK_TIMEOUT)
+			{
+				GD.Print($"[Unit] Bị kẹt quá {STUCK_TIMEOUT}s, chuyển về Idle.");
+				Velocity = Vector2.Zero;
+				CurrentState = UnitState.Idle;
+				_stuckTimer = 0.0f;
+			}
+		}
+	}
+
 	private void HandleMovement()
 	{
 		if (NavAgent == null || NavAgent.IsNavigationFinished())
 		{
+			// [FIX] Reset velocity khi navigation kết thúc
+			Velocity = Vector2.Zero;
 			return;
 		}
 
-		// Chờ nav mesh sẵn sàng trước khi di chuyển
-		// Nếu chưa có nav mesh, GetNextPathPosition() trả về vị trí hiện tại → unit đứng yên
 		Vector2 nextPathPosition = NavAgent.GetNextPathPosition();
-		if (nextPathPosition.DistanceTo(GlobalPosition) < 1.0f && !NavAgent.IsNavigationFinished())
+		float distToNext = nextPathPosition.DistanceTo(GlobalPosition);
+
+		// [FIX] Xóa bỏ logic cũ bị lỗi:
+		//   if (dist < 1.0f) { NavAgent.TargetPosition = NavAgent.TargetPosition; return; }
+		// Godot 4 KHÔNG tính lại đường khi gán cùng giá trị → unit kẹt vĩnh viễn.
+		// Thay vào đó: nếu next position quá gần, chờ NavigationAgent tự advance.
+		if (distToNext < 0.5f)
 		{
-			// Nav mesh chưa sẵn sàng hoặc không tìm được đường → thử cập nhật target
-			NavAgent.TargetPosition = NavAgent.TargetPosition;
+			// Không di chuyển frame này, NavigationAgent sẽ tự chuyển waypoint tiếp theo
 			return;
 		}
+
 		Vector2 newVelocity = GlobalPosition.DirectionTo(nextPathPosition) * MoveSpeed;
 
 		if (NavAgent.AvoidanceEnabled)

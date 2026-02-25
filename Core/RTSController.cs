@@ -52,19 +52,30 @@ public partial class RTSController : Node2D
 				Vector2 targetPoint = GetGlobalMousePosition();
 				Node2D targetObj = GetObjectUnderMouse();
 
+				// [FIX] Đếm số lính đang chọn để tính formation offset
+				// Trước đây tất cả unit đi đến cùng 1 điểm → avoidance system
+				// tạo traffic jam, unit đẩy nhau và oscillate liên tục
 				var allUnits = GetTree().GetNodesInGroup("Units");
+				var selectedUnits = new System.Collections.Generic.List<SelectableUnit>();
 				foreach (Node node in allUnits)
 				{
 					if (node is SelectableUnit unit && unit.IsSelected)
+						selectedUnits.Add(unit);
+				}
+
+				for (int i = 0; i < selectedUnits.Count; i++)
+				{
+					var unit = selectedUnits[i];
+					if (targetObj != null && targetObj.IsInGroup("Resource"))
 					{
-						if (targetObj != null && targetObj.IsInGroup("Resource"))
-						{
-							unit.SetInteractTarget(targetObj);
-						}
-						else
-						{
-							unit.MoveToTarget(targetPoint);
-						}
+						unit.SetInteractTarget(targetObj);
+					}
+					else
+					{
+						// [FIX] Formation offset: xếp lính theo lưới xung quanh điểm click
+						// Tránh tất cả unit dồn 1 pixel → avoidance đẩy lung tung
+						Vector2 offset = GetFormationOffset(i, selectedUnits.Count);
+						unit.MoveToTarget(targetPoint + offset);
 					}
 				}
 			}
@@ -149,6 +160,31 @@ public partial class RTSController : Node2D
 		}
 
 		return null;
+	}
+
+	/// <summary>
+	/// Tính offset formation cho từng unit khi di chuyển theo nhóm.
+	/// Xếp theo lưới vuông, cách nhau SPACING pixel, căn giữa quanh điểm click.
+	/// Nếu chỉ có 1 unit → offset = Zero (đi thẳng đến điểm click).
+	/// </summary>
+	private Vector2 GetFormationOffset(int unitIndex, int totalUnits)
+	{
+		if (totalUnits <= 1) return Vector2.Zero;
+
+		const float SPACING = 40.0f; // Khoảng cách giữa các unit trong formation
+		int columns = Mathf.CeilToInt(Mathf.Sqrt(totalUnits));
+		int row = unitIndex / columns;
+		int col = unitIndex % columns;
+
+		// Căn giữa formation quanh điểm (0,0)
+		float totalWidth = (columns - 1) * SPACING;
+		int rowsCount = Mathf.CeilToInt((float)totalUnits / columns);
+		float totalHeight = (rowsCount - 1) * SPACING;
+
+		float x = col * SPACING - totalWidth / 2.0f;
+		float y = row * SPACING - totalHeight / 2.0f;
+
+		return new Vector2(x, y);
 	}
 }
 

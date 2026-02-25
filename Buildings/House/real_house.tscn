@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://real_house_scene"]
+
+[ext_resource type="Script" path="res://Buildings/House/RealHouse.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bk4i3acyvc8ku" path="res://Assets/Tiny Swords (Free Pack)/Buildings/Black Buildings/House1.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_house"]
+size = Vector2(60, 60)
+
+[node name="RealHouse" type="StaticBody2D" node_paths=PackedStringArray("BuildingSprite")]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+BuildingSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_house")

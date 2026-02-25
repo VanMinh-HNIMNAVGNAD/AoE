@@ -10,6 +10,9 @@ public partial class GameManager : Node2D
 	[Export] public int HouseGoldCost = 0;
 	[Export] public int HouseMealCost = 0;
 
+	/// <summary>Scene nhà thật (StaticBody2D) — dùng khi đặt xong ghost.</summary>
+	private PackedScene _realHouseScene;
+
 	[Export] public AcceptDialog warning;
 
 	[ExportGroup("Cấu hình Chung")]
@@ -29,6 +32,9 @@ public partial class GameManager : Node2D
 	/// <summary>Scene ghost nhà — preload sẵn để dùng khi bấm hotkey.</summary>
 	private PackedScene _houseGhostScene;
 
+	/// <summary>Cache danh sách texture nhà (các hướng) để dùng khi spawn nhà thật.</summary>
+	private Godot.Collections.Array<Texture2D> _cachedHouseTextures;
+
 	/// <summary>Đang ở chế độ xây dựng hay không.</summary>
 	public bool IsBuildMode => _currentGhost != null && IsInstanceValid(_currentGhost);
 
@@ -40,6 +46,18 @@ public partial class GameManager : Node2D
 		}
 
 		_houseGhostScene = GD.Load<PackedScene>("res://Buildings/House/house.tscn");
+		_realHouseScene = GD.Load<PackedScene>("res://Buildings/House/real_house.tscn");
+
+		// Cache danh sách texture nhà từ ghost scene (chỉ làm 1 lần)
+		if (_houseGhostScene != null)
+		{
+			var temp = _houseGhostScene.Instantiate() as BuildingGhostBase;
+			if (temp != null)
+			{
+				_cachedHouseTextures = temp.BuildingTextures;
+				temp.QueueFree();
+			}
+		}
 		
 		UpdateUI(); 
 	}
@@ -91,7 +109,7 @@ public partial class GameManager : Node2D
 
 	public void StartBuildMode(PackedScene ghostScene)
 	{
-		// Nếu đang có ghost cũ → hủy trước
+		
 		if (_currentGhost != null && IsInstanceValid(_currentGhost))
 		{
 			_currentGhost.QueueFree();
@@ -130,11 +148,29 @@ public partial class GameManager : Node2D
 			Wood -= HouseWoodCost;
 			UpdateUI();
 
-			if(HouseScene != null){
-				Node RealBuilding = HouseScene.Instantiate();
+			// Dùng scene nhà thật (StaticBody2D) thay vì ghost scene
+			PackedScene sceneToSpawn = _realHouseScene;
+			if (sceneToSpawn == null)
+			{
+				GD.PrintErr("[GameManager] _realHouseScene is null! Fallback to HouseScene.");
+				sceneToSpawn = HouseScene;
+			}
+
+			if(sceneToSpawn != null){
+				Node RealBuilding = sceneToSpawn.Instantiate();
 				if(RealBuilding is Node2D building2d){
 					building2d.GlobalPosition = position;
 				}
+
+				// Gán đúng texture (hướng) mà người chơi đã chọn lúc xây
+				if (RealBuilding is RealHouse realHouse
+					&& _cachedHouseTextures != null
+					&& textureIndex >= 0
+					&& textureIndex < _cachedHouseTextures.Count)
+				{
+					realHouse.SetTexture(_cachedHouseTextures[textureIndex]);
+				}
+
 				GetTree().CurrentScene.AddChild(RealBuilding);
 
 				NavBaker navBaker = GetTree().CurrentScene.GetNodeOrNull<NavBaker>("NavBaker");
