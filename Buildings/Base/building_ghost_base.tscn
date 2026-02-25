@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://tfahl64807p5" path="res://Buildings/Base/BuildingGhostBase.cs" id="1_sqtx0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c44vy"]
-radius = 45.044422
+radius = 31.144823
 
 [node name="BuildingGhostBase" type="Node2D" node_paths=PackedStringArray("GhostSprite", "CollisionArea")]
 script = ExtResource("1_sqtx0")
@@ -15,4 +15,5 @@ CollisionArea = NodePath("CollisionArea")
 [node name="CollisionArea" type="Area2D" parent="."]
 
 [node name="CollisionArea" type="CollisionShape2D" parent="CollisionArea"]
+scale = Vector2(0.97, 0.97)
 shape = SubResource("CircleShape2D_c44vy")

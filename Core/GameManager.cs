@@ -19,6 +19,9 @@ public partial class GameManager : Node2D
 	/// <summary>Ghost đang hiển thị (nếu có). Chỉ cho phép 1 ghost cùng lúc.</summary>
 	private BuildingGhostBase _currentGhost = null;
 
+	/// <summary>Scene ghost nhà — preload sẵn để dùng khi bấm hotkey.</summary>
+	private PackedScene _houseGhostScene;
+
 	/// <summary>Đang ở chế độ xây dựng hay không.</summary>
 	public bool IsBuildMode => _currentGhost != null && IsInstanceValid(_currentGhost);
 
@@ -28,9 +31,25 @@ public partial class GameManager : Node2D
 		{
 			Instance = this;
 		}
+
+		// Preload house ghost scene
+		_houseGhostScene = GD.Load<PackedScene>("res://Buildings/House/house.tscn");
 		
 		// Cập nhật UI ngay khi vừa vào game
 		UpdateUI(); 
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		// Bấm phím B → Bắt đầu chế độ xây nhà
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
+		{
+			if (keyEvent.Keycode == Key.B && !IsBuildMode)
+			{
+				StartBuildMode(_houseGhostScene);
+				GetViewport().SetInputAsHandled();
+			}
+		}
 	}
 
 	public void AddResource(string type, int amount)
@@ -93,6 +112,7 @@ public partial class GameManager : Node2D
 			// Kết nối signal để xử lý khi đặt nhà hoặc hủy
 			ghost.BuildingPlaced += OnBuildingPlaced;
 			ghost.BuildingCancelled += OnBuildingCancelled;
+			// Thêm trực tiếp vào scene root — ZIndex=4096 trong BuildingGhostBase đảm bảo hiển thị trên
 			GetTree().CurrentScene.AddChild(ghost);
 			GD.Print("[GameManager] Bắt đầu chế độ xây dựng.");
 		}
