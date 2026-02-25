@@ -10,6 +10,15 @@ public partial class RealHouse : StaticBody2D
     public override void _Ready()
     {
         AddToGroup("Building");
+
+        // đặt z-index lớn để luôn nằm trên các tầng tilemap
+        ZAsRelative = false;
+        ZIndex = 100;
+        if (BuildingSprite != null)
+        {
+            BuildingSprite.ZIndex = ZIndex;
+            BuildingSprite.ZAsRelative = false;
+        }
     }
 
     /// <summary>
