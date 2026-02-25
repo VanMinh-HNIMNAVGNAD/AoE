@@ -64,6 +64,11 @@ public partial class NavBaker : Node
 		// Chờ 2 physics frame → đảm bảo tất cả node đã đăng ký
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+		// Chờ thêm 1 frame nữa cho CliffBarrier tạo xong StaticBody2D
+		// (CliffBarrier dùng CallDeferred → cần thêm 1 frame)
+		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
 		DoBake();
 	}
 
