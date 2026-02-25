@@ -1,10 +1,6 @@
 using Godot;
 using System;
 
-/// <summary>
-/// Lớp cha cho TẤT CẢ các bóng mờ công trình (Ghost).
-/// Đã bao gồm: Đi theo chuột, Check va chạm, Đổi màu và XOAY BẰNG CÁCH ĐỔI ẢNH (Phím R).
-/// </summary>
 public partial class BuildingGhostBase : Node2D
 {
     [ExportGroup("Tham chiếu Node")]
@@ -21,16 +17,11 @@ public partial class BuildingGhostBase : Node2D
 
     public override void _Ready()
     {
-        // [FIX] Đặt ZIndex = 4096 (giá trị tối đa) + ZAsRelative = false
-        // để ghost LUÔN hiển thị TRÊN mọi TileMapLayer, kể cả tile có z_index offset cao.
-        // ZAsRelative = false → z_index là tuyệt đối, không phụ thuộc parent.
         ZAsRelative = false;
         ZIndex = 4096;
 
         if (CollisionArea != null)
         {
-            // [FIX] Ghost không cần bị detect bởi object khác → collision_layer = 0
-            // Chỉ detect các vật cản trên layer 1 (nhưng sẽ lọc thêm trong callback)
             CollisionArea.CollisionLayer = 0;
             CollisionArea.CollisionMask = 1;
 
@@ -40,7 +31,6 @@ public partial class BuildingGhostBase : Node2D
             CollisionArea.AreaExited += OnAreaExited;
         }
 
-        // Gán hình ảnh đầu tiên khi mới xuất hiện (nếu có)
         if (BuildingTextures != null && BuildingTextures.Count > 0 && GhostSprite != null)
         {
             GhostSprite.Texture = BuildingTextures[0];
@@ -56,19 +46,18 @@ public partial class BuildingGhostBase : Node2D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // Khi bấm phím R -> Đổi ảnh sang mặt tiếp theo
         if (@event is InputEventKey keyEvent && keyEvent.Pressed && keyEvent.Keycode == Key.R)
         {
             RotateBuildingVisuals();
         }
 
-        // Khi bấm Escape → Hủy đặt nhà, xóa ghost
+        
         if (@event is InputEventKey escKey && escKey.Pressed && escKey.Keycode == Key.Escape)
         {
             CancelPlacement();
         }
 
-        // Click chuột trái → Xác nhận đặt nhà (nếu vị trí hợp lệ)
+        
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
         {
             if (mouseEvent.ButtonIndex == MouseButton.Left)
@@ -106,20 +95,14 @@ public partial class BuildingGhostBase : Node2D
         // CollisionArea.RotationDegrees += 90;
     }
 
-    // --- LOGIC KIỂM TRA VA CHẠM ---
 
-    /// <summary>
-    /// Kiểm tra xem body có phải là vật cản cho việc đặt nhà hay không.
-    /// [FIX] Bỏ qua TileMapLayer (mặt đất) — trước đây ghost luôn detect đất → luôn đỏ.
-    /// Chỉ tính các vật cản thực sự: cây, đá, unit, building.
-    /// </summary>
     private bool IsBlockingBody(Node body)
     {
-        // Bỏ qua TileMapLayer — đây là mặt đất, không phải vật cản
+        
         if (body is TileMapLayer) return false;
         if (body is TileMap) return false;
 
-        // Chỉ chặn bởi các nhóm cụ thể: vật cản, tài nguyên, unit, building
+        
         if (body is Node2D node2d)
         {
             return node2d.IsInGroup("Colli") 
@@ -167,25 +150,14 @@ public partial class BuildingGhostBase : Node2D
         return _isValidPosition;
     }
 
-    // --- LOGIC ĐẶT NHÀ ---
-
-    /// <summary>
-    /// Signal phát ra khi người chơi xác nhận đặt nhà.
-    /// Truyền vị trí đặt và index texture hiện tại (hướng nhà).
-    /// </summary>
+    // LOGIC ĐẶT NHÀ 
     [Signal]
     public delegate void BuildingPlacedEventHandler(Vector2 position, int textureIndex);
 
-    /// <summary>
-    /// Signal phát ra khi người chơi hủy đặt nhà.
-    /// </summary>
     [Signal]
     public delegate void BuildingCancelledEventHandler();
 
-    /// <summary>
-    /// Xác nhận đặt nhà tại vị trí hiện tại.
-    /// Phát signal BuildingPlaced rồi xóa ghost.
-    /// </summary>
+    
     protected virtual void ConfirmPlacement()
     {
         GD.Print($"[Ghost] Đặt nhà tại {GlobalPosition}, hướng {_currentTextureIndex}");
@@ -193,9 +165,6 @@ public partial class BuildingGhostBase : Node2D
         QueueFree();
     }
 
-    /// <summary>
-    /// Hủy bỏ đặt nhà, xóa ghost khỏi scene.
-    /// </summary>
     protected virtual void CancelPlacement()
     {
         GD.Print("[Ghost] Hủy đặt nhà.");

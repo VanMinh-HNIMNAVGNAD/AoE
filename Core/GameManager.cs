@@ -4,6 +4,13 @@ using System;
 public partial class GameManager : Node2D
 {
 	public static GameManager Instance { get; private set; }
+	[ExportGroup("Mục xây (debug)")]
+	[Export] public PackedScene HouseScene;
+	[Export] public int HouseWoodCost = 50;
+	[Export] public int HouseGoldCost = 0;
+	[Export] public int HouseMealCost = 0;
+
+	[Export] public AcceptDialog warning;
 
 	[ExportGroup("Cấu hình Chung")]
 	[Export] public int Wood = 0;
@@ -32,10 +39,8 @@ public partial class GameManager : Node2D
 			Instance = this;
 		}
 
-		// Preload house ghost scene
 		_houseGhostScene = GD.Load<PackedScene>("res://Buildings/House/house.tscn");
 		
-		// Cập nhật UI ngay khi vừa vào game
 		UpdateUI(); 
 	}
 
@@ -67,13 +72,11 @@ public partial class GameManager : Node2D
 				break;
 			default:
 				GD.PrintErr($"[GameManager] Loại tài nguyên không hợp lệ: {type}");
-				return; // Thoát ra nếu lỗi, không cập nhật UI
+				return; 
 		}
 		
-		// In ra console (nếu bạn muốn giữ lại)
-		GD.Print($"[Kinh tế] +{amount} {type} | Tổng: Gỗ({Wood}) Thực({Food}) Vàng({Gold})");
 		
-		// Cập nhật lên màn hình
+		GD.Print($"[Kinh tế] +{amount} {type} | Tổng: Gỗ({Wood}) Thịt({Food}) Vàng({Gold})");
 		UpdateUI();
 	}
 	
@@ -86,10 +89,6 @@ public partial class GameManager : Node2D
 
 	// ──────────────────── XÂY DỰNG ────────────────────
 
-	/// <summary>
-	/// Bắt đầu chế độ xây dựng: tạo ghost từ PackedScene và thêm vào scene tree.
-	/// Gọi từ UI hoặc hotkey. Ví dụ: GameManager.Instance.StartBuildMode(houseScene);
-	/// </summary>
 	public void StartBuildMode(PackedScene ghostScene)
 	{
 		// Nếu đang có ghost cũ → hủy trước
@@ -109,10 +108,9 @@ public partial class GameManager : Node2D
 		if (instance is BuildingGhostBase ghost)
 		{
 			_currentGhost = ghost;
-			// Kết nối signal để xử lý khi đặt nhà hoặc hủy
 			ghost.BuildingPlaced += OnBuildingPlaced;
 			ghost.BuildingCancelled += OnBuildingCancelled;
-			// Thêm trực tiếp vào scene root — ZIndex=4096 trong BuildingGhostBase đảm bảo hiển thị trên
+
 			GetTree().CurrentScene.AddChild(ghost);
 			GD.Print("[GameManager] Bắt đầu chế độ xây dựng.");
 		}
@@ -126,7 +124,33 @@ public partial class GameManager : Node2D
 	private void OnBuildingPlaced(Vector2 position, int textureIndex)
 	{
 		GD.Print($"[GameManager] Nhà đã được đặt tại {position}, hướng {textureIndex}");
-		// TODO: Trừ tài nguyên, tạo building thật tại vị trí này
+		
+		if (Wood >= HouseWoodCost)
+		{
+			Wood -= HouseWoodCost;
+			UpdateUI();
+
+			if(HouseScene != null){
+				Node RealBuilding = HouseScene.Instantiate();
+				if(RealBuilding is Node2D building2d){
+					building2d.GlobalPosition = position;
+				}
+				GetTree().CurrentScene.AddChild(RealBuilding);
+
+				NavBaker navBaker = GetTree().CurrentScene.GetNodeOrNull<NavBaker>("NavBaker");
+				if (navBaker != null){
+					navBaker.RebakeNavigation();
+				}else{
+					GD.Print("co loi khi xay nha -- navbaker loi");
+				}
+			}
+		}
+		else
+		{
+			GD.Print("Khong du tai nguyen");
+			ShowWarningMessage("ehehe");
+			
+		}
 		_currentGhost = null;
 	}
 
@@ -135,4 +159,17 @@ public partial class GameManager : Node2D
 		GD.Print("[GameManager] Hủy xây dựng.");
 		_currentGhost = null;
 	}
+
+	private void ShowWarningMessage(string message)
+{
+    if (warning != null)
+    {
+        warning.DialogText = message;
+        warning.PopupCentered();
+    }
+    else
+    {
+        GD.PrintErr($"[UI Báo Lỗi] {message}");
+    }
+}
 }
