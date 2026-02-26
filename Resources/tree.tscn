@@ -73,6 +73,7 @@ height = 138.0
 
 [node name="Pine" type="StaticBody2D" groups=["Colli", "Resource", "Tree"]]
 script = ExtResource("1_h5w34")
+MaxResource = 250
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Resource", "Tree"]]
 sprite_frames = SubResource("SpriteFrames_gvdgx")

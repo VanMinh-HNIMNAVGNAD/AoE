@@ -1,3 +1,4 @@
+
 using Godot;
 using System;
 
@@ -58,8 +59,8 @@ public partial class GameManager : Node2D
 				temp.QueueFree();
 			}
 		}
-		
-		UpdateUI(); 
+
+		UpdateUI();
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -77,7 +78,7 @@ public partial class GameManager : Node2D
 
 	public void AddResource(string type, int amount)
 	{
-		switch (type.ToLower()) 
+		switch (type.ToLower())
 		{
 			case "wood":
 				Wood += amount;
@@ -90,14 +91,13 @@ public partial class GameManager : Node2D
 				break;
 			default:
 				GD.PrintErr($"[GameManager] Loại tài nguyên không hợp lệ: {type}");
-				return; 
+				return;
 		}
-		
-		
+
 		GD.Print($"[Kinh tế] +{amount} {type} | Tổng: Gỗ({Wood}) Thịt({Food}) Vàng({Gold})");
 		UpdateUI();
 	}
-	
+
 	private void UpdateUI()
 	{
 		if (WoodLabel != null) WoodLabel.Text = $"Gỗ: {Wood}";
@@ -109,7 +109,6 @@ public partial class GameManager : Node2D
 
 	public void StartBuildMode(PackedScene ghostScene)
 	{
-		
 		if (_currentGhost != null && IsInstanceValid(_currentGhost))
 		{
 			_currentGhost.QueueFree();
@@ -142,7 +141,7 @@ public partial class GameManager : Node2D
 	private void OnBuildingPlaced(Vector2 position, int textureIndex)
 	{
 		GD.Print($"[GameManager] Nhà đã được đặt tại {position}, hướng {textureIndex}");
-		
+
 		if (Wood >= HouseWoodCost)
 		{
 			Wood -= HouseWoodCost;
@@ -156,9 +155,11 @@ public partial class GameManager : Node2D
 				sceneToSpawn = HouseScene;
 			}
 
-			if(sceneToSpawn != null){
+			if (sceneToSpawn != null)
+			{
 				Node RealBuilding = sceneToSpawn.Instantiate();
-				if(RealBuilding is Node2D building2d){
+				if (RealBuilding is Node2D building2d)
+				{
 					building2d.GlobalPosition = position;
 				}
 
@@ -174,9 +175,12 @@ public partial class GameManager : Node2D
 				GetTree().CurrentScene.AddChild(RealBuilding);
 
 				NavBaker navBaker = GetTree().CurrentScene.GetNodeOrNull<NavBaker>("NavBaker");
-				if (navBaker != null){
+				if (navBaker != null)
+				{
 					navBaker.RebakeNavigation();
-				}else{
+				}
+				else
+				{
 					GD.Print("co loi khi xay nha -- navbaker loi");
 				}
 			}
@@ -185,7 +189,6 @@ public partial class GameManager : Node2D
 		{
 			GD.Print("Khong du tai nguyen");
 			ShowWarningMessage("ehehe");
-			
 		}
 		_currentGhost = null;
 	}
@@ -197,15 +200,15 @@ public partial class GameManager : Node2D
 	}
 
 	private void ShowWarningMessage(string message)
-{
-    if (warning != null)
-    {
-        warning.DialogText = message;
-        warning.PopupCentered();
-    }
-    else
-    {
-        GD.PrintErr($"[UI Báo Lỗi] {message}");
-    }
-}
+	{
+		if (warning != null)
+		{
+			warning.DialogText = message;
+			warning.PopupCentered();
+		}
+		else
+		{
+			GD.PrintErr($"[UI Báo Lỗi] {message}");
+		}
+	}
 }

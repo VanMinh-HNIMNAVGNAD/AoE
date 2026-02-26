@@ -52,7 +52,15 @@ public partial class SelectableUnit : CharacterBody2D
 	public float MoveSpeed => Stats != null ? Stats.MaxSpeed : 200.0f;
 
 	// ──────────────────── VIRTUAL (lớp con override) ────────────────────
-	public virtual bool CanInteractWith(Node2D target) { return false; }
+	public virtual bool CanInteractWith(Node2D target) 
+	{ 
+		// Nếu mục tiêu có gắn IInteractable VÀ vẫn còn tương tác được -> Trả về true
+		if (target is IInteractable interactable)
+		{
+			return interactable.CanInteract();
+		}
+		return false; 
+	}
 	protected virtual void PerformAction(double delta) { }
 
 	// [FIX] Timer chống kẹt: nếu unit không tiến được sau N giây, force idle
@@ -111,8 +119,15 @@ public partial class SelectableUnit : CharacterBody2D
 				
 			case UnitState.MoveToInteract:
 				if (AnimSprite != null) AnimSprite.Play("run");
-				// [FIX] Kiểm tra target còn tồn tại + kiểm tra ResourceNode.IsExhausted
-				if (!IsInstanceValid(CurrentTarget) || IsTargetExhaustedResource(CurrentTarget))
+				
+				// 1. KIỂM TRA MỤC TIÊU BẰNG INTERFACE (Thay thế cho IsTargetExhaustedResource cũ)
+				bool canStillInteract = true;
+				if (CurrentTarget is IInteractable interactableTarget)
+				{
+					canStillInteract = interactableTarget.CanInteract();
+				}
+
+				if (!IsInstanceValid(CurrentTarget) || !canStillInteract)
 				{
 					CurrentTarget = null;
 					Velocity = Vector2.Zero;
@@ -120,13 +135,19 @@ public partial class SelectableUnit : CharacterBody2D
 					break;
 				}
 
-				// [FIX] Cập nhật lại đích đến của NavAgent theo vị trí mới nhất của target
-				// Trước đây chỉ set 1 lần trong SetInteractTarget → nếu target di chuyển,
-				// unit vẫn đi đến vị trí cũ
-				NavAgent.TargetPosition = CurrentTarget.GlobalPosition;
+				// 2. CẬP NHẬT ĐÍCH ĐẾN BẰNG INTERFACE
+				if (CurrentTarget is IInteractable validInteractable)
+				{
+					NavAgent.TargetPosition = validInteractable.GetInteractionPosition();
+				}
+				else
+				{
+					NavAgent.TargetPosition = CurrentTarget.GlobalPosition;
+				}
 
 				float interactRange = Stats != null ? Stats.InteractionRange : 60.0f;
 				float distanceToTarget = GlobalPosition.DistanceTo(CurrentTarget.GlobalPosition);
+				
 				if (distanceToTarget <= interactRange)
 				{
 					Velocity = Vector2.Zero;
@@ -213,15 +234,7 @@ public partial class SelectableUnit : CharacterBody2D
 		IndicatorSprite.Scale = finalScale;
 	}
 
-	/// <summary>
-	/// Kiểm tra xem target có phải ResourceNode đã cạn kiệt hay không.
-	/// Dùng trong MoveToInteract để dừng di chuyển ngay khi tài nguyên bị Pawn khác khai thác hết,
-	/// thay vì đợi đến cuối frame (khi QueueFree thực sự xóa node).
-	/// </summary>
-	protected bool IsTargetExhaustedResource(Node2D target)
-	{
-		return target is ResourceNode res && res.IsExhausted;
-	}
+
 
 	/// <summary>
 	/// Kiểm tra unit có bị kẹt không (di chuyển nhưng vị trí không thay đổi).

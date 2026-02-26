@@ -1,13 +1,16 @@
 using Godot;
 using System;
 
-public partial class ResourceNode : StaticBody2D
+public partial class ResourceNode : StaticBody2D, IInteractable
 {
     // [Export] để bạn có thể chỉnh mỗi cây có bao nhiêu gỗ ngay trong Editor
     [Export] public int MaxResource = 100; 
     
     // Biến lưu trữ số gỗ hiện tại
     private int _currentResource;
+
+    // Loại tài nguyên (Wood/Gold/Food) — có thể chỉnh trong Inspector per-node
+    [Export] public string ResourceType = "Wood";
 
     /// <summary>
     /// Cờ đánh dấu tài nguyên đã cạn kiệt.
@@ -30,8 +33,7 @@ public partial class ResourceNode : StaticBody2D
     // nên Pawn thứ 2 vẫn có thể gọi TakeResource() → gathered = 0 (không crash).
     public int TakeResource(int amount)
     {
-        // [FIX] Nếu cây đã cạn kiệt (đã gọi QueueFree ở frame trước hoặc cùng frame)
-        // → trả 0 ngay lập tức, tránh double QueueFree và tính tài nguyên sai.
+        
         if (IsExhausted) return 0;
 
         // Dùng Mathf.Min để lấy số lượng thực tế có thể khai thác
@@ -49,5 +51,28 @@ public partial class ResourceNode : StaticBody2D
         }
 
         return gathered;
+    }
+
+    public void Interact(Node2D interactor)
+    {
+
+        // Lấy số lượng thực tế thu được từ node
+        int gathered = TakeResource(10);
+
+        // Nếu thu được tài nguyên, cộng vào GameManager
+        if (gathered > 0 && GameManager.Instance != null)
+        {
+            GameManager.Instance.AddResource(ResourceType, gathered);
+        }
+    }
+
+    public Vector2 GetInteractionPosition()
+    {
+        return GlobalPosition; 
+    }
+
+    public bool CanInteract()
+    {
+        return !IsExhausted; 
     }
 }

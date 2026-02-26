@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_house"]
 size = Vector2(60, 60)
 
-[node name="RealHouse" type="StaticBody2D" node_paths=PackedStringArray("BuildingSprite")]
+[node name="RealHouse" type="StaticBody2D" node_paths=PackedStringArray("BuildingSprite") groups=["Building"]]
 collision_layer = 1
 collision_mask = 0
 script = ExtResource("1_script")

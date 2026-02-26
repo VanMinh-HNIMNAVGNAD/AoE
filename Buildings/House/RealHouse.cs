@@ -1,34 +1,95 @@
 using Godot;
+using System;
 
-/// <summary>
-/// Script cho nhà thật (đã xây xong), chỉ đứng yên và thuộc group "Building".
-/// </summary>
-public partial class RealHouse : StaticBody2D
+// Thực thi Interface IInteractable
+public partial class RealHouse : StaticBody2D, IInteractable
 {
-    [Export] public Sprite2D BuildingSprite;
+    // Lưu ý: Hãy chắc chắn trong Editor, Node ảnh của bạn là AnimatedSprite2D chứ không phải Sprite2D thường nhé!
+    [Export] public AnimatedSprite2D BuildingSprite; 
+
+    [ExportGroup("Thông số Xây dựng")]
+    [Export] public int MaxHealth = 100;
+    
+    private int _currentHealth;
+    private bool _isConstructed = false;
 
     public override void _Ready()
     {
-        AddToGroup("Building");
+        AddToGroup("Building"); 
+        ZAsRelative = false; 
+        ZIndex = 100; 
 
-        // đặt z-index lớn để luôn nằm trên các tầng tilemap
-        ZAsRelative = false;
-        ZIndex = 100;
-        if (BuildingSprite != null)
+        // Khi vừa đặt móng, máu bắt đầu từ 1
+        _currentHealth = 1;
+        _isConstructed = false;
+        
+        if (BuildingSprite != null) 
         {
-            BuildingSprite.ZIndex = ZIndex;
-            BuildingSprite.ZAsRelative = false;
+            BuildingSprite.ZIndex = ZIndex; 
+            BuildingSprite.ZAsRelative = false; 
+            
+            // Dừng autoplay (nếu có) vì ta sẽ tự điều khiển frame bằng code
+            BuildingSprite.Pause(); 
+        }
+
+        // Gọi ngay lần đầu để hiện cái móng nhà
+        UpdateConstructionVisual();
+    }
+
+    // ==========================================
+    // THỰC THI INTERFACE IInteractable
+    // ==========================================
+
+    public void Interact(Node2D interactor)
+    {
+        if (_isConstructed) return; 
+
+        // Mỗi nhát búa cộng 10 máu (Có thể lấy từ Nông dân sau này)
+        int buildPower = 10;
+        _currentHealth += buildPower;
+        
+        GD.Print($"[NHÀ] Đang thi công... Máu: {_currentHealth}/{MaxHealth}");
+
+        // Cập nhật hình ảnh ngay sau khi được cộng máu
+        UpdateConstructionVisual();
+
+        // Kiểm tra xem đã đầy máu chưa
+        if (_currentHealth >= MaxHealth)
+        {
+            _currentHealth = MaxHealth;
+            _isConstructed = true;
+            GD.Print("[NHÀ] ĐÃ XÂY XONG!");
         }
     }
 
-    /// <summary>
-    /// Gán texture cho nhà dựa theo hướng người chơi đã chọn khi đặt ghost.
-    /// </summary>
-    public void SetTexture(Texture2D texture)
+    // ─── HÀM MỚI: TỰ ĐỘNG CẬP NHẬT HÌNH ẢNH THEO % MÁU ───
+    private void UpdateConstructionVisual()
     {
-        if (BuildingSprite != null && texture != null)
-        {
-            BuildingSprite.Texture = texture;
-        }
+        if (BuildingSprite == null || BuildingSprite.SpriteFrames == null) return;
+
+        // 1. Tính % hoàn thành (từ 0.0 đến 1.0)
+        float progress = (float)_currentHealth / MaxHealth;
+        progress = Mathf.Clamp(progress, 0f, 1f); // Ép giới hạn an toàn
+
+        // 2. Lấy tổng số khung hình của animation hiện tại (thường là "default")
+        string currentAnim = BuildingSprite.Animation;
+        int totalFrames = BuildingSprite.SpriteFrames.GetFrameCount(currentAnim);
+
+        // 3. Tính toán xem với % máu này thì tương ứng với Frame số mấy
+        // Công thức: % máu * (tổng số khung hình - 1)
+        int targetFrame = Mathf.FloorToInt(progress * (totalFrames - 1));
+
+        // 4. Gán hình ảnh tương ứng
+        BuildingSprite.Frame = targetFrame;
+    }
+
+    public Vector2 GetInteractionPosition()
+    {
+        return GlobalPosition;
+    }
+
+    public bool CanInteract()
+    {
+        return !_isConstructed; 
     }
 }

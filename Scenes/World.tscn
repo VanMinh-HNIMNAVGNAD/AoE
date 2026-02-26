@@ -86,11 +86,13 @@ GoldLabel = NodePath("../../UI/ResourceBar/GoldLabel")
 FoodLabel = NodePath("../../UI/ResourceBar/FoodLabel")
 
 [node name="RTScamera2D" type="Camera2D" parent="GameSetUp"]
+position = Vector2(317, 135)
 position_smoothing_enabled = true
 script = ExtResource("47_0fglf")
 Speed = 700.0
 
 [node name="RTSController" type="Node2D" parent="GameSetUp" node_paths=PackedStringArray("SelectionPanel")]
+position = Vector2(3, 3)
 script = ExtResource("48_qtjmb")
 SelectionPanel = NodePath("../../UI/SelectionBox")
 
