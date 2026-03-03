@@ -11,3 +11,7 @@ script = ExtResource("1_xsa74")
 
 [node name="Colli" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xsa74")
+
+[node name="NavigationAgent3D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 4.0
+target_desired_distance = 4.0

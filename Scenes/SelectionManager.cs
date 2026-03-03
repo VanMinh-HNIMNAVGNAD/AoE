@@ -15,6 +15,14 @@ public partial class SelectionManager : Node2D
                 Vector2 globalPos = GetGlobalMousePosition();
                 HandleLeftClick(globalPos);
             }
+			else if(mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
+			{
+				foreach (var node in GetTree().GetNodesInGroup("units"))
+				{
+					if(node is BaseUnit baseUnit && baseUnit.IsSelected)
+					baseUnit.MoveAction(GetGlobalMousePosition());
+				}
+			}
         }
     }
 

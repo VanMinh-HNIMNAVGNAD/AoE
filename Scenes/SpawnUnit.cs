@@ -10,8 +10,6 @@ public partial class SpawnUnit : Node2D
 
 	public override void _Ready()
 	{
-		// Units are spawned into Entities/Units so they Y-sort correctly
-		// with buildings, resources, and other entities
 		_unitsContainer = GetNode<Node2D>("/root/World/Entities/Units");
 
 		for (int i = 0; i < count; i++)
@@ -22,12 +20,7 @@ public partial class SpawnUnit : Node2D
 			));
 		}
 	}
-
-	/// <summary>
-	/// Spawn a unit at the given world position.
-	/// Can be called from other systems (e.g. Barracks production).
-	/// </summary>
-	public BaseUnit SpawnNewUnit(Vector2 worldPosition, int ownerId = 0)
+		public BaseUnit SpawnNewUnit(Vector2 worldPosition, int ownerId = 0)
 	{
 		var unit = SpawnScene.Instantiate<BaseUnit>();
 		unit.Position = worldPosition;
