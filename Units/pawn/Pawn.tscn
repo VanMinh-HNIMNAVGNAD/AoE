@@ -1,7 +1,21 @@
-[gd_scene load_steps=12 format=3 uid="uid://hpjpepqf05im"]
+[gd_scene load_steps=23 format=3 uid="uid://hpjpepqf05im"]
 
 [ext_resource type="PackedScene" uid="uid://btgih6dk2orn1" path="res://Units/Base/BaseUnit.tscn" id="1_j4sya"]
+[ext_resource type="Texture2D" uid="uid://qrcm4p14a85y" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Interact Hammer.png" id="2_qqf52"]
 [ext_resource type="Texture2D" uid="uid://bh6wc6vyq47fj" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Idle.png" id="2_rjfkn"]
+[ext_resource type="Texture2D" uid="uid://cn31wb17dhp7d" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Run.png" id="3_walk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7sux"]
+atlas = ExtResource("2_qqf52")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sbjq"]
+atlas = ExtResource("2_qqf52")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hp14r"]
+atlas = ExtResource("2_qqf52")
+region = Rect2(384, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rjfkn"]
 atlas = ExtResource("2_rjfkn")
@@ -35,8 +49,46 @@ region = Rect2(1152, 0, 192, 192)
 atlas = ExtResource("2_rjfkn")
 region = Rect2(1344, 0, 192, 192)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0001"]
+atlas = ExtResource("3_walk")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0002"]
+atlas = ExtResource("3_walk")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0003"]
+atlas = ExtResource("3_walk")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0004"]
+atlas = ExtResource("3_walk")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0005"]
+atlas = ExtResource("3_walk")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0006"]
+atlas = ExtResource("3_walk")
+region = Rect2(960, 0, 192, 192)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_e7sux"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7sux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8sbjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hp14r")
+}],
+"loop": true,
+"name": &"hold",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rjfkn")
@@ -65,6 +117,29 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0001")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0002")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0003")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0004")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0005")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0006")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
 }]
 
 [node name="Pawn" node_paths=PackedStringArray("anima") instance=ExtResource("1_j4sya")]
@@ -74,7 +149,7 @@ anima = NodePath("AnimatedSprite2D")
 sprite_frames = SubResource("SpriteFrames_e7sux")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.023881389
+frame_progress = 0.029725293
 
 [node name="Colli" parent="." index="1"]
 visible = false
