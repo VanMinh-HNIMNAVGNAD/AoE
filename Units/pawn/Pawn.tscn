@@ -1,6 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://hpjpepqf05im"]
+[gd_scene load_steps=24 format=3 uid="uid://hpjpepqf05im"]
 
 [ext_resource type="PackedScene" uid="uid://btgih6dk2orn1" path="res://Units/Base/BaseUnit.tscn" id="1_j4sya"]
+[ext_resource type="Script" uid="uid://ch6a2x1fl7vi8" path="res://Units/Pawn/Pawn.cs" id="2_nrjah"]
 [ext_resource type="Texture2D" uid="uid://qrcm4p14a85y" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Interact Hammer.png" id="2_qqf52"]
 [ext_resource type="Texture2D" uid="uid://bh6wc6vyq47fj" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Idle.png" id="2_rjfkn"]
 [ext_resource type="Texture2D" uid="uid://cn31wb17dhp7d" path="res://Assets/Tiny Swords (Free Pack)/Units/Yellow Units/Pawn/Pawn_Run.png" id="3_walk"]
@@ -86,7 +87,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hp14r")
 }],
 "loop": true,
-"name": &"hold",
+"name": &"build",
 "speed": 10.0
 }, {
 "frames": [{
@@ -143,13 +144,14 @@ animations = [{
 }]
 
 [node name="Pawn" node_paths=PackedStringArray("anima") instance=ExtResource("1_j4sya")]
+script = ExtResource("2_nrjah")
 anima = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_e7sux")
-animation = &"idle"
+animation = &"build"
 autoplay = "idle"
-frame_progress = 0.029725293
+frame_progress = 0.9584895
 
 [node name="Colli" parent="." index="1"]
 visible = false

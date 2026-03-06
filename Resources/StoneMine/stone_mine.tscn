@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://cbqrikqjikd6i"]
+
+[ext_resource type="PackedScene" uid="uid://bq5uenixiqw6n" path="res://Resources/StoneMine/stone_mine_base.tscn" id="1_d7j54"]
+[ext_resource type="Texture2D" uid="uid://c5u2t2pd01r87" path="res://Assets/Tiny Swords (Update 010)/Deco/06.png" id="2_fc0kl"]
+[ext_resource type="Texture2D" uid="uid://dk47sgte55vag" path="res://Assets/Tiny Swords (Update 010)/Deco/05.png" id="3_bf32t"]
+[ext_resource type="Texture2D" uid="uid://rsdt8heo6tgm" path="res://Assets/Tiny Swords (Update 010)/Deco/04.png" id="4_isdgm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv5cu"]
+atlas = ExtResource("2_fc0kl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36n48"]
+atlas = ExtResource("3_bf32t")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gojhs"]
+atlas = ExtResource("4_isdgm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1wk0j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv5cu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36n48")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gojhs")
+}],
+"loop": true,
+"name": &"new_animation_1",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lv5cu"]
+radius = 20.0
+
+[node name="StoneMine" instance=ExtResource("1_d7j54")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" index="0"]
+sprite_frames = SubResource("SpriteFrames_1wk0j")
+animation = &"new_animation"
+autoplay = "default"
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_lv5cu")

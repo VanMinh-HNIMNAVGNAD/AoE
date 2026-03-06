@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq5uenixiqw6n"]
+
+[ext_resource type="Script" uid="uid://crjjt27olh7ml" path="res://Resources/StoneMine/StoneMineNode.cs" id="1_17nxs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7hlx1"]
+radius = 20.0
+
+[node name="StoneMine" type="StaticBody2D"]
+script = ExtResource("1_17nxs")
+Type = 2
+MaxAmount = 600
+HarvestPerTick = 8
+Anima = NodePath("VisualRoot/AnimatedSprite2D")
+
+[node name="VisualRoot" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_7hlx1")

@@ -48,7 +48,7 @@ public partial class CameraRoll : Camera2D
 		GlobalPosition += _inputvector * Speed * delta;
 	}
 
-    public override void _UnhandledInput(InputEvent @event)
+      public override void _UnhandledInput(InputEvent @event)
     {
         base._UnhandledInput(@event);
 		if (@event is InputEventMouseButton mouseEvent)

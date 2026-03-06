@@ -20,11 +20,38 @@ public partial class BaseUnit : CharacterBody2D
 	protected NavigationAgent2D _navAgent2D;
 	protected int _currentHp;
 
+	// ── Stuck detection: nếu unit ở state Moving nhưng hầu như không di
+	//    chuyển được (bị kẹt bởi unit khác / terrain) quá 0.5s → về Idle.
+	private Vector2 _stuckCheckPosition;
+	private float _stuckTimer;
+	private const float StuckTimeThreshold = 0.5f;
+	private const float StuckMoveThreshold = 2.0f; // world pixels trong 0.5s
+
 	// ── 1.4  Biến lưu trạng thái hiện tại.  Đặt protected để class con
 	//         (Pawn, Warrior…) có thể đọc/ghi, nhưng bên ngoài thì không.
 	protected UnitState _state = UnitState.Idle;
 
-	public bool IsSelected = false;
+	// ── Node con vẽ vòng chọn. Được tạo tự động trong _Ready().
+	//    Tách ra node riêng để BaseUnit không bị "bẩn" bởi logic UI.
+	private SelectionCircle _selectionCircle;
+
+	// ── IsSelected là PROPERTY (không phải field) để khi giá trị thay đổi,
+	//    ta có thể bật/tắt visual ngay lập tức mà không cần poll mỗi frame.
+	private bool _isSelected = false;
+	public bool IsSelected
+	{
+		get => _isSelected;
+		set
+		{
+			if (_isSelected == value) return; // Tránh cập nhật thừa
+			_isSelected = value;
+
+			// Bật/tắt node vẽ vòng tròn theo trạng thái mới.
+			// _selectionCircle có thể null nếu _Ready() chưa chạy (edge case spawn).
+			if (_selectionCircle != null)
+				_selectionCircle.Visible = value;
+		}
+	}
 
 	// ── Getter công khai để các Manager (SelectionManager…) kiểm tra state
 	//    mà không thể tự ý đổi state từ bên ngoài.
@@ -35,6 +62,14 @@ public partial class BaseUnit : CharacterBody2D
 		_currentHp = MaxHp;
 		AddToGroup("units");
 		_navAgent2D = GetNode<NavigationAgent2D>("NavigationAgent2D");
+
+		// ── Tạo SelectionCircle và gắn vào unit này.
+		//    ZIndex = -1 → vẽ phía SAU sprite (nằm dưới chân, không che unit).
+		//    Visible = false → ẩn mặc định, chỉ hiện khi IsSelected = true.
+		_selectionCircle = new SelectionCircle();
+		_selectionCircle.ZIndex = -1;
+		_selectionCircle.Visible = false;
+		AddChild(_selectionCircle);
 	}
 
 	public virtual void TakeDamage(int amount)
@@ -58,6 +93,8 @@ public partial class BaseUnit : CharacterBody2D
 	public void MoveAction(Vector2 target)
 	{
 		_navAgent2D.TargetPosition = target;
+		_stuckTimer = 0f;
+		_stuckCheckPosition = GlobalPosition;
 		ChangeState(UnitState.Moving);
 	}
 
@@ -133,6 +170,24 @@ public partial class BaseUnit : CharacterBody2D
 		// ── 1.6  MoveAndSlide luôn được gọi mỗi frame bất kể state,
 		//         vì Godot CharacterBody2D cần gọi nó để cập nhật vị trí.
 		MoveAndSlide();
+
+		// ── Stuck detection: kiểm tra sau MoveAndSlide.
+		//    Mỗi 0.5s kiểm tra xem unit có thực sự di chuyển không.
+		//    Nếu khoảng cách nhỏ hơn ngưỡng → unit bị kẹt → về Idle.
+		if (_state == UnitState.Moving)
+		{
+			_stuckTimer += (float)delta;
+			if (_stuckTimer >= StuckTimeThreshold)
+			{
+				if (GlobalPosition.DistanceTo(_stuckCheckPosition) < StuckMoveThreshold)
+				{
+					Velocity = Vector2.Zero;
+					ChangeState(UnitState.Idle);
+				}
+				_stuckTimer = 0f;
+				_stuckCheckPosition = GlobalPosition;
+			}
+		}
 	}
 
 	// ── 1.6  Tách riêng logic Moving ra method để dễ đọc.

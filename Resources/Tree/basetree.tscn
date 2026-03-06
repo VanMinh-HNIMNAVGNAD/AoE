@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbdw1dg20x2qi"]
+
+[ext_resource type="Script" uid="uid://bas4gsrimy7t0" path="res://Resources/Tree/TreeNode.cs" id="1_ka6lr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0tjxq"]
+radius = 12.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7n0jm"]
+radius = 30.0
+height = 64.0
+
+[node name="Trees2" type="StaticBody2D"]
+script = ExtResource("1_ka6lr")
+MaxAmount = 300
+HarvestPerTick = 5
+Anima = NodePath("VisualRoot/AnimatedSprite2D")
+
+[node name="VisualRoot" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0tjxq")
+
+[node name="InteractArea" type="Area2D" parent="."]
+
+[node name="InteractAreaShape" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CapsuleShape2D_7n0jm")

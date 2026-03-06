@@ -1,4 +1,4 @@
-# AoE
+auto# AoE
 game 
 game có sử dụng asset Tiny sword tùy chỉnh
 ngôn ngữ gdscript + c# chủ yếu
