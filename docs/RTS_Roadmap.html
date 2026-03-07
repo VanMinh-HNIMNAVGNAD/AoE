@@ -17,6 +17,7 @@
   tr:nth-child(even) { background: #f8f9fa; }
   .status-done { color: #27ae60; font-weight: bold; }
   .status-current { color: #e94560; font-weight: bold; }
+  .status-partial { color: #d68910; font-weight: bold; }
   .status-todo { color: #888; }
   .phase-header { display: flex; align-items: center; gap: 0.5rem; }
   .phase-time { font-size: 0.8rem; color: #e94560; font-weight: normal; margin-left: auto; background: #fff0f3; padding: 0.15rem 0.5rem; border-radius: 3px; }
@@ -45,7 +46,7 @@
 <body>
 
 <h1>⚔️ 2D Empire RTS — Roadmap</h1>
-<p class="subtitle">Godot 4.5 + C# (.NET 9) &nbsp;|&nbsp; Asset: Tiny Swords &nbsp;|&nbsp; Ngày tạo: 03/03/2026</p>
+<p class="subtitle">Godot 4.5 + C# (.NET 9) &nbsp;|&nbsp; Asset: Tiny Swords &nbsp;|&nbsp; Ngày tạo: 03/03/2026 &nbsp;|&nbsp; Cập nhật: 07/03/2026</p>
 
 <!-- CURRENT STATUS -->
 <div class="section-current">
@@ -54,48 +55,72 @@
   <tr><th style="width:35%">Thành phần</th><th style="width:15%">Trạng thái</th><th>Chi tiết</th></tr>
   <tr><td>Engine & Project</td><td class="status-done">✅ Done</td><td>Godot 4.5, C# .NET 9, scene hierarchy chuẩn</td></tr>
   <tr><td>Map / Tilemap</td><td class="status-done">✅ Done</td><td>Water, Ground, Cliff, Shadow, Props, Decorations</td></tr>
-  <tr><td>Camera</td><td class="status-done">✅ Done</td><td>Di chuyển WASD + mouse edge, zoom wheel, smooth</td></tr>
-  <tr><td>BaseUnit + Pawn</td><td class="status-done">✅ Done</td><td>HP, Speed, TakeDamage, Die, Idle animation</td></tr>
-  <tr><td>Selection (basic)</td><td class="status-done">✅ Done</td><td>Click chọn 1 unit gần nhất</td></tr>
-  <tr><td>Spawn System</td><td class="status-done">✅ Done</td><td>Spawn units vào Entities/Units (Y-sort ready)</td></tr>
+  <tr><td>Camera</td><td class="status-done">✅ Done</td><td>WASD + mouse edge + zoom mượt; chưa có zoom theo vị trí chuột</td></tr>
+  <tr><td>BaseUnit + Pawn</td><td class="status-partial">🟡 Partial</td><td>BaseUnit có state machine, move, selection visual; Pawn vẫn chưa có worker logic</td></tr>
+  <tr><td>Selection</td><td class="status-partial">🟡 Partial</td><td>Đã có click đơn, drag-select, selection circle, right-click move; chưa có Shift+Click / control groups / double-click</td></tr>
+  <tr><td>Movement & Navigation</td><td class="status-partial">🟡 Partial</td><td>NavigationAgent2D + MoveAndSlide đã có; cần bake NavigationRegion2D để pathfinding hoạt động ổn định</td></tr>
+  <tr><td>Resource System</td><td class="status-partial">🟡 Partial</td><td>Đã có ResourceNode, Tree, GoldMine, StoneMine, Meat; ResourceManager còn trống, chưa có gather/deposit</td></tr>
+  <tr><td>Spawn System</td><td class="status-done">✅ Done</td><td>Spawn unit thử nghiệm trong World.tscn để test selection/movement</td></tr>
+  <tr><td>UI / HUD</td><td class="status-current">🔴 Chưa làm</td><td>Thư mục UI còn trống, chưa có resource bar hay info panel</td></tr>
+  <tr><td>Buildings</td><td class="status-current">🔴 Chưa làm</td><td>Cấu trúc thư mục đã có nhưng chưa có code/scene/build flow</td></tr>
   <tr><td>Scene Hierarchy</td><td class="status-done">✅ Done</td><td>Terrain → Entities(Y-sort) → Navigation → Managers → Camera → UILayer</td></tr>
 </table>
 </div>
 
+<div class="milestone-box">
+  <h3>🔎 Đánh giá nhanh sau khi review code</h3>
+  <div class="milestone-item"><span><strong>Điểm mạnh</strong> — Kiến trúc sạch, build pass, BaseUnit/Selection/ResourceNode tách vai trò rõ ràng</span><span class="tag tag-done">Ổn</span></div>
+  <div class="milestone-item"><span><strong>Nút thắt hiện tại</strong> — NavigationRegion chưa bake, ResourceManager chưa có logic, Pawn chưa có gather loop</span><span class="tag tag-next">Cần xử lý</span></div>
+  <div class="milestone-item"><span><strong>Ưu tiên kế tiếp</strong> — Hoàn tất movement thật sự rồi mới khóa Phase 1 và đẩy sang economy loop</span><span class="tag tag-next">Next</span></div>
+</div>
+
 <!-- PHASE 1 -->
-<h2><span class="phase-header">Phase 1: Unit Movement <span class="phase-time">1-2 tuần</span></span></h2>
+<h2><span class="phase-header">Phase 1: Unit Movement <span class="phase-time">Đang hoàn thiện</span></span></h2>
 <table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>1.1</td><td><strong>NavigationRegion2D</strong></td><td>Thêm NavigationRegion2D vào node Navigation, bake navigation polygon trên vùng đất đi được</td></tr>
-  <tr><td>1.2</td><td><strong>NavigationAgent2D</strong></td><td>Thêm NavigationAgent2D vào BaseUnit.tscn</td></tr>
-  <tr><td>1.3</td><td><strong>Right-click di chuyển</strong></td><td>SelectionManager xử lý Right-click → gọi unit.MoveTo(position)</td></tr>
-  <tr><td>1.4</td><td><strong>Unit State Machine</strong></td><td>Enum UnitState { Idle, Moving, Attacking, Gathering, Building, Dead } + switch trong _PhysicsProcess</td></tr>
-  <tr><td>1.5</td><td><strong>Walk animation</strong></td><td>Thêm animation "walk" cho Pawn (sprite sheet đã có sẵn)</td></tr>
-  <tr><td>1.6</td><td><strong>MoveAndSlide</strong></td><td>BaseUnit.MoveTo() set target → state = Moving → NavigationAgent tính path → Velocity + MoveAndSlide()</td></tr>
+  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th style="width:15%">Status</th><th>Mô tả</th></tr>
+  <tr><td>1.1</td><td><strong>NavigationRegion2D</strong></td><td class="status-current">🔴 Chưa xong</td><td>Node đã có trong World nhưng vẫn cần bake navigation polygon trên vùng đất đi được</td></tr>
+  <tr><td>1.2</td><td><strong>NavigationAgent2D</strong></td><td class="status-done">✅ Done</td><td>Đã gắn trong BaseUnit.tscn và được BaseUnit sử dụng</td></tr>
+  <tr><td>1.3</td><td><strong>Right-click di chuyển</strong></td><td class="status-done">✅ Done</td><td>SelectionManager đã xử lý right-click để gọi MoveAction tới world position</td></tr>
+  <tr><td>1.4</td><td><strong>Unit State Machine</strong></td><td class="status-partial">🟡 Partial</td><td>Idle/Moving/Dead dùng được; Attacking/Gathering/Building mới là khung sườn</td></tr>
+  <tr><td>1.5</td><td><strong>Walk animation</strong></td><td class="status-done">✅ Done</td><td>BaseUnit phát walk/idle theo state, Pawn scene đã có animation tương ứng</td></tr>
+  <tr><td>1.6</td><td><strong>MoveAndSlide</strong></td><td class="status-done">✅ Done</td><td>MoveAction → state Moving → NavigationAgent lấy next path → Velocity + MoveAndSlide()</td></tr>
+  <tr><td>1.7</td><td><strong>Stuck handling</strong></td><td class="status-done">✅ Done</td><td>Có kiểm tra unit bị kẹt và tự trả về Idle sau 0.5s nếu gần như không di chuyển</td></tr>
 </table>
 
 <!-- PHASE 2 -->
-<h2><span class="phase-header">Phase 2: Selection nâng cao <span class="phase-time">1 tuần</span></span></h2>
+<h2><span class="phase-header">Phase 2: Selection nâng cao <span class="phase-time">Đã bắt đầu</span></span></h2>
 <table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>2.1</td><td><strong>Drag-select box</strong></td><td>Giữ chuột trái kéo tạo rectangle → chọn tất cả units trong vùng</td></tr>
-  <tr><td>2.2</td><td><strong>Selection visual</strong></td><td>Vẽ vòng tròn xanh dưới chân unit khi IsSelected = true</td></tr>
-  <tr><td>2.3</td><td><strong>Shift+Click</strong></td><td>Thêm/bỏ unit khỏi selection mà không deselect các unit khác</td></tr>
-  <tr><td>2.4</td><td><strong>Ctrl+1-9 nhóm</strong></td><td>Gán nhóm quân, nhấn số để chọn lại, nhấn đúp để focus camera</td></tr>
-  <tr><td>2.5</td><td><strong>Double-click</strong></td><td>Chọn tất cả cùng loại unit trên màn hình</td></tr>
+  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th style="width:15%">Status</th><th>Mô tả</th></tr>
+  <tr><td>2.1</td><td><strong>Drag-select box</strong></td><td class="status-done">✅ Done</td><td>Đã có rectangle selection với drag threshold tính theo screen space</td></tr>
+  <tr><td>2.2</td><td><strong>Selection visual</strong></td><td class="status-done">✅ Done</td><td>Đã có SelectionCircle vẽ ellipse xanh dưới chân unit được chọn</td></tr>
+  <tr><td>2.3</td><td><strong>Shift+Click</strong></td><td class="status-current">🔴 Todo</td><td>Chưa có add/remove selection mà không deselect toàn bộ</td></tr>
+  <tr><td>2.4</td><td><strong>Ctrl+1-9 nhóm</strong></td><td class="status-current">🔴 Todo</td><td>Chưa có control groups, recall groups, hay camera focus</td></tr>
+  <tr><td>2.5</td><td><strong>Double-click</strong></td><td class="status-current">🔴 Todo</td><td>Chưa có logic chọn tất cả unit cùng loại trên màn hình</td></tr>
 </table>
 
 <!-- PHASE 3 -->
-<h2><span class="phase-header">Phase 3: Resource System <span class="phase-time">2 tuần</span></span></h2>
+<h2><span class="phase-header">Phase 3: Resource System <span class="phase-time">Sẵn sàng triển khai</span></span></h2>
 <table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>3.1</td><td><strong>ResourceManager.cs</strong></td><td>Singleton quản lý: Gold, Wood, Food, Stone cho mỗi player. Signal khi thay đổi</td></tr>
-  <tr><td>3.2</td><td><strong>ResourceNode.cs</strong></td><td>Base class cho tài nguyên trên map: TreeNode, GoldMine, StoneMine, BerryBush</td></tr>
-  <tr><td>3.3</td><td><strong>Resource scenes</strong></td><td>Tạo scene từ assets có sẵn: Trees, Gold Mine (Assets/Tiny Swords Update 010/Resources/)</td></tr>
-  <tr><td>3.4</td><td><strong>Gather logic</strong></td><td>Pawn right-click resource → Walk tới → Gather (timer) → Walk về TownHall → Deposit → Loop</td></tr>
-  <tr><td>3.5</td><td><strong>Carry & deposit</strong></td><td>Pawn mang CarryCapacity → giao cho ResourceManager khi về gần building</td></tr>
-  <tr><td>3.6</td><td><strong>Resource depletion</strong></td><td>Tài nguyên hết → animation biến mất → QueueFree()</td></tr>
-  <tr><td>3.7</td><td><strong>HUD resource bar</strong></td><td>UI hiển thị Gold/Wood/Food/Stone trên cùng (trong node UILayer)</td></tr>
+  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th style="width:15%">Status</th><th>Mô tả</th></tr>
+  <tr><td>3.1</td><td><strong>ResourceManager.cs</strong></td><td class="status-current">🔴 Todo</td><td>Đã autoload nhưng file còn trống; cần quản lý Wood/Gold/Stone/Meat và emit signal khi thay đổi</td></tr>
+  <tr><td>3.2</td><td><strong>ResourceNode.cs</strong></td><td class="status-done">✅ Done</td><td>Đã có base class + enum ResourceType + Harvest() + OnDepleted()</td></tr>
+  <tr><td>3.3</td><td><strong>Resource scenes</strong></td><td class="status-done">✅ Done</td><td>Đã có Tree, Gold Mine, Stone Mine, Meat/Sheep scenes trong project</td></tr>
+  <tr><td>3.4</td><td><strong>Gather logic</strong></td><td class="status-current">🔴 Todo</td><td>Pawn chưa đi tới resource, chưa gather theo timer, chưa quay về điểm nộp</td></tr>
+  <tr><td>3.5</td><td><strong>Carry & deposit</strong></td><td class="status-current">🔴 Todo</td><td>Chưa có carry capacity, inventory tạm trên worker, hay deposit vào hệ thống tài nguyên</td></tr>
+  <tr><td>3.6</td><td><strong>Resource depletion</strong></td><td class="status-done">✅ Done</td><td>Tree/Meat QueueFree, GoldMine/StoneMine ẩn sprite khi cạn</td></tr>
+  <tr><td>3.7</td><td><strong>HUD resource bar</strong></td><td class="status-current">🔴 Todo</td><td>Nên làm cùng ResourceManager để nhìn thấy loop kinh tế hoạt động ngay</td></tr>
+</table>
+
+<!-- NEXT SPRINT -->
+<h2>🚧 Sprint kế tiếp đề xuất</h2>
+<table>
+  <tr><th style="width:10%">Ưu tiên</th><th style="width:28%">Công việc</th><th>Mục tiêu</th></tr>
+  <tr><td><strong>P1</strong></td><td>Bake NavigationRegion2D</td><td>Khóa lại nền tảng movement/pathfinding để unit đi ổn định trên map thật</td></tr>
+  <tr><td><strong>P1</strong></td><td>Implement ResourceManager</td><td>Tạo trục chính cho economy loop, chi phí building, training và HUD</td></tr>
+  <tr><td><strong>P1</strong></td><td>Pawn gather loop cơ bản</td><td>Right-click resource → gather → carry → deposit về TownHall/Base</td></tr>
+  <tr><td><strong>P2</strong></td><td>HUD resource bar tối thiểu</td><td>Hiển thị tài nguyên hiện tại để kiểm chứng gather/deposit</td></tr>
+  <tr><td><strong>P2</strong></td><td>Shift+Click selection</td><td>Hoàn thiện thao tác RTS cơ bản trước khi số lượng unit tăng lên</td></tr>
+  <tr><td><strong>P3</strong></td><td>Zoom theo vị trí chuột</td><td>Cải thiện feel camera sau khi gameplay core loop đã usable</td></tr>
 </table>
 
 <!-- PHASE 4 -->
@@ -112,141 +137,44 @@
 </table>
 
 <!-- PHASE 5 -->
-<h2><span class="phase-header">Phase 5: Unit Production <span class="phase-time">1-2 tuần</span></span></h2>
+<h2><span class="phase-header">Phase 5: UI/HUD cơ bản <span class="phase-time">1-2 tuần</span></span></h2>
 <table>
   <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>5.1</td><td><strong>Production queue</strong></td><td>Click building → UI hiện nút train → queue tối đa 5</td></tr>
-  <tr><td>5.2</td><td><strong>Train timer</strong></td><td>Mỗi unit tốn thời gian + tài nguyên → progress bar</td></tr>
-  <tr><td>5.3</td><td><strong>Rally point</strong></td><td>Right-click trên map khi chọn building → set điểm tập kết cho quân mới</td></tr>
-  <tr><td>5.4</td><td><strong>Warrior unit</strong></td><td>Warrior.cs + scene (melee, HP cao) — sprite Attack/Run/Idle có sẵn</td></tr>
-  <tr><td>5.5</td><td><strong>Archer unit</strong></td><td>Archer.cs + scene (ranged, HP thấp, tầm xa)</td></tr>
-  <tr><td>5.6</td><td><strong>Lancer unit</strong></td><td>Lancer.cs + scene (melee, bonus vs cavalry)</td></tr>
+  <tr><td>5.1</td><td><strong>Resource bar</strong></td><td>Hiển thị Wood, Gold, Stone, Meat để nhìn thấy economy loop hoạt động</td></tr>
+  <tr><td>5.2</td><td><strong>Selection info</strong></td><td>Hiện tên unit, HP, số lượng unit đang chọn</td></tr>
+  <tr><td>5.3</td><td><strong>Build buttons tối thiểu</strong></td><td>Khi chọn worker/building, hiển thị vài nút cơ bản đủ để test gameplay loop</td></tr>
+  <tr><td>5.4</td><td><strong>Feedback rõ ràng</strong></td><td>Text hoặc progress đơn giản cho gather, build, train; chưa cần minimap hay HUD phức tạp</td></tr>
 </table>
 
-<!-- PHASE 6 -->
-<h2><span class="phase-header">Phase 6: Combat System <span class="phase-time">2-3 tuần</span></span></h2>
+<!-- BACKLOG -->
+<h2><span class="phase-header">Backlog sau này <span class="phase-time">Để sau khi core ổn định</span></span></h2>
 <table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>6.1</td><td><strong>Attack stats</strong></td><td>AttackDamage, AttackSpeed, AttackRange, Armor trong BaseUnit</td></tr>
-  <tr><td>6.2</td><td><strong>Auto-attack</strong></td><td>Unit phát hiện enemy trong DetectionRadius → state = Attacking</td></tr>
-  <tr><td>6.3</td><td><strong>Attack command</strong></td><td>Right-click enemy unit/building → chase + attack</td></tr>
-  <tr><td>6.4</td><td><strong>Damage formula</strong></td><td>finalDmg = max(1, AttackDamage - TargetArmor)</td></tr>
-  <tr><td>6.5</td><td><strong>Attack animation</strong></td><td>Play animation attack → tại frame impact → gọi target.TakeDamage()</td></tr>
-  <tr><td>6.6</td><td><strong>Projectile</strong></td><td>Archer/Tower bắn projectile bay tới target</td></tr>
-  <tr><td>6.7</td><td><strong>Health bar</strong></td><td>Thanh HP nhỏ trên đầu unit/building</td></tr>
-  <tr><td>6.8</td><td><strong>Death animation</strong></td><td>Play animation die → fade → QueueFree()</td></tr>
-  <tr><td>6.9</td><td><strong>Tower auto-attack</strong></td><td>Tower là building, tự bắn enemy trong tầm</td></tr>
-</table>
-
-<!-- PHASE 7 -->
-<h2><span class="phase-header">Phase 7: Player & Team System <span class="phase-time">1 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>7.1</td><td><strong>PlayerData.cs</strong></td><td>PlayerId, Name, FactionColor, ResourceManager, IsAI</td></tr>
-  <tr><td>7.2</td><td><strong>GameManager.cs</strong></td><td>Singleton quản lý danh sách players, game state</td></tr>
-  <tr><td>7.3</td><td><strong>Ownership</strong></td><td>Mỗi unit/building có OwnerId → xác định ally/enemy</td></tr>
-  <tr><td>7.4</td><td><strong>Faction colors</strong></td><td>Unit/building tint theo màu faction (Yellow, Blue, Red, Purple, Black)</td></tr>
-  <tr><td>7.5</td><td><strong>Win/Lose condition</strong></td><td>Phá hủy hết building enemy = thắng</td></tr>
-</table>
-
-<!-- PHASE 8 -->
-<h2><span class="phase-header">Phase 8: UI/HUD hoàn chỉnh <span class="phase-time">2 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>8.1</td><td><strong>Bottom panel</strong></td><td>Panel kiểu AoE: unit info (trái), minimap (giữa), action buttons (phải)</td></tr>
-  <tr><td>8.2</td><td><strong>Unit info panel</strong></td><td>Icon + tên + HP bar + stats khi chọn unit</td></tr>
-  <tr><td>8.3</td><td><strong>Multi-select panel</strong></td><td>Grid icons khi chọn nhiều unit</td></tr>
-  <tr><td>8.4</td><td><strong>Building info panel</strong></td><td>Production queue + nút hành động</td></tr>
-  <tr><td>8.5</td><td><strong>Action buttons</strong></td><td>Move, Attack, Patrol, Stop, Hold, Build tùy loại unit</td></tr>
-  <tr><td>8.6</td><td><strong>Minimap</strong></td><td>SubViewport render top-down → hiện trong UI corner</td></tr>
-  <tr><td>8.7</td><td><strong>Tooltips</strong></td><td>Hover button → hiện giá, mô tả, phím tắt</td></tr>
-  <tr><td>8.8</td><td><strong>Custom cursor</strong></td><td>Cursor riêng cho từng mode: select, attack, build, gather</td></tr>
-</table>
-
-<!-- PHASE 9 -->
-<h2><span class="phase-header">Phase 9: AI đối thủ <span class="phase-time">2-3 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>9.1</td><td><strong>AI Controller</strong></td><td>Thay thế player input bằng AI decision tree</td></tr>
-  <tr><td>9.2</td><td><strong>AI Economy</strong></td><td>Tự gửi Pawn thu thập, ưu tiên Food → Wood → Gold</td></tr>
-  <tr><td>9.3</td><td><strong>AI Build order</strong></td><td>TownHall → House → Barracks → mở rộng theo nhu cầu</td></tr>
-  <tr><td>9.4</td><td><strong>AI Military</strong></td><td>Train quân khi đủ tài nguyên, tấn công khi quân đủ mạnh</td></tr>
-  <tr><td>9.5</td><td><strong>AI Scouting</strong></td><td>Gửi unit khám phá map tìm enemy base</td></tr>
-  <tr><td>9.6</td><td><strong>Difficulty levels</strong></td><td>Easy (chậm 50%), Normal, Hard (bonus tài nguyên 30%)</td></tr>
-</table>
-
-<!-- PHASE 10 -->
-<h2><span class="phase-header">Phase 10: Fog of War <span class="phase-time">1-2 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>10.1</td><td><strong>Vision system</strong></td><td>Mỗi unit/building có VisionRange → cập nhật mỗi frame</td></tr>
-  <tr><td>10.2</td><td><strong>Fog texture</strong></td><td>TileMap layer hoặc shader: Unexplored(đen), Explored(mờ), Visible(rõ)</td></tr>
-  <tr><td>10.3</td><td><strong>Hide enemies</strong></td><td>Enemy ngoài vision → ẩn sprite + không click được</td></tr>
-  <tr><td>10.4</td><td><strong>Reveal on explore</strong></td><td>Terrain đã thấy chuyển từ đen → mờ vĩnh viễn</td></tr>
-</table>
-
-<!-- PHASE 11 -->
-<h2><span class="phase-header">Phase 11: Audio <span class="phase-time">1 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>11.1</td><td><strong>AudioManager</strong></td><td>Singleton phát SFX + Music</td></tr>
-  <tr><td>11.2</td><td><strong>SFX</strong></td><td>Click, attack hit, building complete, unit trained, die, gather</td></tr>
-  <tr><td>11.3</td><td><strong>Ambient sounds</strong></td><td>Nước chảy, chim hót (AudioStreamPlayer2D gắn vào map elements)</td></tr>
-  <tr><td>11.4</td><td><strong>Music</strong></td><td>BGM peace/battle, crossfade khi chiến đấu xảy ra</td></tr>
-  <tr><td>11.5</td><td><strong>Unit responses</strong></td><td>Voice lines khi ra lệnh (optional)</td></tr>
-</table>
-
-<!-- PHASE 12 -->
-<h2><span class="phase-header">Phase 12: Menu & Game Flow <span class="phase-time">1 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>12.1</td><td><strong>Main Menu</strong></td><td>New Game, Settings, Quit</td></tr>
-  <tr><td>12.2</td><td><strong>Game Setup</strong></td><td>Chọn map, số player, difficulty AI</td></tr>
-  <tr><td>12.3</td><td><strong>Pause Menu</strong></td><td>ESC → Resume, Settings, Quit to Menu</td></tr>
-  <tr><td>12.4</td><td><strong>Victory/Defeat</strong></td><td>Popup khi thắng/thua + nút replay/menu</td></tr>
-  <tr><td>12.5</td><td><strong>Settings</strong></td><td>Volume, resolution, keybindings</td></tr>
-  <tr><td>12.6</td><td><strong>Save/Load</strong></td><td>Serialize game state → file (optional, phức tạp)</td></tr>
-</table>
-
-<!-- PHASE 13 -->
-<h2><span class="phase-header">Phase 13: Polish & Balance <span class="phase-time">2 tuần</span></span></h2>
-<table>
-  <tr><th style="width:8%">#</th><th style="width:30%">Task</th><th>Mô tả</th></tr>
-  <tr><td>13.1</td><td><strong>Particle FX</strong></td><td>Attack impact, building destroy, gather sparkle (assets có sẵn)</td></tr>
-  <tr><td>13.2</td><td><strong>Screen effects</strong></td><td>Screen shake khi trận chiến lớn</td></tr>
-  <tr><td>13.3</td><td><strong>Unit balancing</strong></td><td>Spreadsheet stats → playtest → điều chỉnh damage/HP/cost</td></tr>
-  <tr><td>13.4</td><td><strong>Performance</strong></td><td>Object pooling cho projectile, spatial hashing, giới hạn max units</td></tr>
-  <tr><td>13.5</td><td><strong>Bug fixing</strong></td><td>Playtest nhiều lần → fix edge cases</td></tr>
-  <tr><td>13.6</td><td><strong>Extra maps</strong></td><td>Tạo thêm map hoặc random map generator</td></tr>
+  <tr><th style="width:28%">Nhóm tính năng</th><th>Mô tả</th></tr>
+  <tr><td><strong>Combat nâng cao</strong></td><td>Attack command, projectile, auto-attack, armor, death animation nâng cao</td></tr>
+  <tr><td><strong>Nhiều loại unit</strong></td><td>Warrior, Archer, Lancer, production queue phức tạp, rally point</td></tr>
+  <tr><td><strong>Player/Team system</strong></td><td>OwnerId, ally/enemy, faction color, win/lose</td></tr>
+  <tr><td><strong>UI lớn</strong></td><td>Bottom panel kiểu AoE, minimap, tooltips, custom cursor</td></tr>
+  <tr><td><strong>AI / Fog / Audio / Menu</strong></td><td>Toàn bộ nhóm tính năng nâng cao nên để sau khi gameplay cốt lõi chạy mượt</td></tr>
 </table>
 
 <!-- TIMELINE SUMMARY -->
 <h2 style="margin-top: 2rem;">📊 Tổng thời gian ước tính</h2>
 <table class="summary-table">
   <tr><th>Phase</th><th>Nội dung</th><th style="width:15%; text-align:center">Thời gian</th></tr>
-  <tr><td>Phase 1</td><td>Unit Movement</td><td style="text-align:center">1-2 tuần</td></tr>
-  <tr><td>Phase 2</td><td>Selection nâng cao</td><td style="text-align:center">1 tuần</td></tr>
+  <tr><td>Phase 1</td><td>Unit Movement</td><td style="text-align:center">Còn ~0.5 tuần</td></tr>
+  <tr><td>Phase 2</td><td>Selection nâng cao</td><td style="text-align:center">Còn ~0.5-1 tuần</td></tr>
   <tr><td>Phase 3</td><td>Resource System</td><td style="text-align:center">2 tuần</td></tr>
   <tr><td>Phase 4</td><td>Building System</td><td style="text-align:center">2-3 tuần</td></tr>
-  <tr><td>Phase 5</td><td>Unit Production</td><td style="text-align:center">1-2 tuần</td></tr>
-  <tr><td>Phase 6</td><td>Combat System</td><td style="text-align:center">2-3 tuần</td></tr>
-  <tr><td>Phase 7</td><td>Player & Team</td><td style="text-align:center">1 tuần</td></tr>
-  <tr><td>Phase 8</td><td>UI/HUD</td><td style="text-align:center">2 tuần</td></tr>
-  <tr><td>Phase 9</td><td>AI đối thủ</td><td style="text-align:center">2-3 tuần</td></tr>
-  <tr><td>Phase 10</td><td>Fog of War</td><td style="text-align:center">1-2 tuần</td></tr>
-  <tr><td>Phase 11</td><td>Audio</td><td style="text-align:center">1 tuần</td></tr>
-  <tr><td>Phase 12</td><td>Menu & Game Flow</td><td style="text-align:center">1 tuần</td></tr>
-  <tr><td>Phase 13</td><td>Polish & Balance</td><td style="text-align:center">2 tuần</td></tr>
-  <tr style="background:#e8f0fe; font-weight:bold"><td></td><td>TỔNG</td><td style="text-align:center; color:#e94560">~20-26 tuần</td></tr>
+  <tr><td>Phase 5</td><td>UI/HUD cơ bản</td><td style="text-align:center">1-2 tuần</td></tr>
+  <tr style="background:#e8f0fe; font-weight:bold"><td></td><td>TỔNG CORE ROADMAP</td><td style="text-align:center; color:#e94560">~6-8 tuần</td></tr>
 </table>
 
 <!-- MILESTONES -->
 <div class="milestone-box">
   <h3>🎯 Milestone chính</h3>
-  <div class="milestone-item"><span><strong>Demo 1</strong> — Units di chuyển, chọn nhiều, thu thập tài nguyên (Phase 1-3)</span><span class="milestone-time">~4 tuần</span></div>
-  <div class="milestone-item"><span><strong>Demo 2</strong> — Xây nhà, train quân, chiến đấu cơ bản (Phase 4-6)</span><span class="milestone-time">+6 tuần</span></div>
-  <div class="milestone-item"><span><strong>Alpha</strong> — AI, Fog of War, UI hoàn chỉnh (Phase 7-10)</span><span class="milestone-time">+7 tuần</span></div>
-  <div class="milestone-item"><span><strong>Beta</strong> — Audio, menu, polish, balance (Phase 11-13)</span><span class="milestone-time">+4 tuần</span></div>
+  <div class="milestone-item"><span><strong>Demo 1</strong> — Unit đi ổn định, chọn được nhiều unit, gather/deposit chạy được</span><span class="milestone-time">~2-3 tuần nữa</span></div>
+  <div class="milestone-item"><span><strong>Demo 2</strong> — Có nhà cơ bản, worker xây được, HUD đủ dùng để test vòng lặp gameplay</span><span class="milestone-time">+3-5 tuần</span></div>
+  <div class="milestone-item"><span><strong>Mốc ổn định đầu tiên</strong> — Có thể chơi thử một vòng gameplay nhỏ mà chưa cần AI hay hệ thống nâng cao</span><span class="milestone-time">Sau core roadmap</span></div>
 </div>
 
 <!-- ASSETS -->
@@ -274,12 +202,11 @@
   <li><strong>C# Signals / Events</strong> — giao tiếp giữa các node loosely-coupled</li>
   <li><strong>State Machine pattern</strong> — FSM quản lý trạng thái unit (Idle/Moving/Attack...)</li>
   <li><strong>Godot UI (Control nodes)</strong> — xây dựng HUD, panels, buttons</li>
-  <li><strong>Shader cơ bản</strong> — cho Fog of War, selection highlight, damage flash</li>
   <li><strong>Godot Resource (.tres)</strong> — data-driven design cho unit stats, building costs</li>
 </ul>
 
 <div class="footer">
-  <p>2D Empire RTS — Roadmap v1.0 — Tạo ngày 03/03/2026</p>
+  <p>2D Empire RTS — Roadmap v1.1 — Tạo ngày 03/03/2026, cập nhật ngày 07/03/2026</p>
   <p>Engine: Godot 4.5 | Language: C# (.NET 9) | Assets: Tiny Swords</p>
 </div>
 
