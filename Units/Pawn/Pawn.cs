@@ -8,6 +8,7 @@ public partial class Pawn : BaseUnit
 	[Export] public int CarryCapacity = 10;
 	public int CurrentCarry = 0;
 	[Export] public float GatherRate = 1.0f; 
+	[Export] public float GatherDistance = 48.0f;
 	
 	private ResourceNode _targetResource = null!;
 	private double _gatherTimer = 0;
@@ -17,6 +18,7 @@ public partial class Pawn : BaseUnit
 		_targetResource = null;
 		_gatherTimer = 0;
 		CurrentState = PawnState.Moving;
+		NavAgent.TargetDesiredDistance = 5.0f;
 		base.MoveTo(targetPosition);
 	}
 
@@ -25,6 +27,8 @@ public partial class Pawn : BaseUnit
 		_targetResource = resource;
 		_gatherTimer = 0;
 		CurrentState = PawnState.Moving;
+		NavAgent.TargetDesiredDistance = GatherDistance;
+		GD.Print($"[Pawn] CommandGather called. Target: {resource.GlobalPosition}, GatherDist: {GatherDistance}");
 		base.MoveTo(resource.GlobalPosition); 
 	}
 
@@ -35,7 +39,11 @@ public partial class Pawn : BaseUnit
 		switch (CurrentState)
 		{
 			case PawnState.Moving:
-				if (!NavAgent.IsNavigationFinished())
+				bool closeEnoughToGather = _targetResource != null
+					&& IsInstanceValid(_targetResource)
+					&& GlobalPosition.DistanceTo(_targetResource.GlobalPosition) <= GatherDistance;
+
+				if (!NavAgent.IsNavigationFinished() && !closeEnoughToGather)
 				{
 					break;
 				}
@@ -43,10 +51,12 @@ public partial class Pawn : BaseUnit
 				Velocity = Vector2.Zero;
 				if (_targetResource != null && IsInstanceValid(_targetResource) && CurrentCarry < CarryCapacity)
 				{
+					GD.Print($"[Pawn] Moving -> Gathering. Dist to resource: {GlobalPosition.DistanceTo(_targetResource.GlobalPosition):F1}");
 					CurrentState = PawnState.Gathering;
 				}
 				else
 				{
+					GD.Print($"[Pawn] Moving -> Idle. HasTarget: {_targetResource != null}, Carry: {CurrentCarry}/{CarryCapacity}");
 					CurrentState = PawnState.Idle;
 				}
 				break;

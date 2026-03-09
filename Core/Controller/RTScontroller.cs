@@ -4,6 +4,7 @@
     public partial class RTScontroller : Node2D
     {
         private const float ClickSelectionRadius = 12.0f;
+        private const float ResourceCommandRadius = 72.0f;
 
         private Vector2 _dragStart;
         private bool _isDragging;
@@ -32,40 +33,28 @@
                         QueueRedraw();
                     }
                 }
-    else if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
-    {
-        Vector2 clickPos = GetGlobalMousePosition();
-
-        var spaceState = GetWorld2D().DirectSpaceState;
-        var query = new PhysicsPointQueryParameters2D();
-        query.Position = clickPos;
-        
-        var result = spaceState.IntersectPoint(query);
-
-        bool clickedOnResource = false;
-
-        foreach (var dictionary in result)
-        {
-            Node collider = dictionary["collider"].As<Node>();
-            if (collider is ResourceNode resourceNode)
-            {
-                clickedOnResource = true;
-                foreach(var unit in _selectedUnits)
+                else if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
                 {
-                    if (unit is Pawn v)
+                    Vector2 clickPos = GetGlobalMousePosition();
+                    ResourceNode resourceNode = FindResourceNear(clickPos);
+                    GD.Print($"[RTS] Right-click at {clickPos}, found resource: {resourceNode != null}, selected units: {_selectedUnits.Count}");
+
+                    if (resourceNode != null)
                     {
-                        v.CommandGather(resourceNode);
+                        foreach (BaseUnit unit in _selectedUnits)
+                        {
+                            if (unit is Pawn pawn)
+                            {
+                                GD.Print($"[RTS] Sending CommandGather to pawn");
+                                pawn.CommandGather(resourceNode);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        CommandSelectedUnits(clickPos);
                     }
                 }
-                break; 
-            }
-        }
-
-        if (!clickedOnResource)
-        {
-            CommandSelectedUnits(clickPos);
-        }
-    }
             }
             else if (@event is InputEventMouseMotion && _isDragging)
             {
@@ -121,6 +110,31 @@
             }
 
             return _selectionRect.HasPoint(unit.GlobalPosition);
+        }
+
+        private ResourceNode FindResourceNear(Vector2 clickPosition)
+        {
+            ResourceNode nearestResource = null;
+            float nearestDistanceSquared = ResourceCommandRadius * ResourceCommandRadius;
+
+            foreach (Node node in GetTree().GetNodesInGroup("resource_nodes"))
+            {
+                if (node is not ResourceNode resourceNode || !IsInstanceValid(resourceNode))
+                {
+                    continue;
+                }
+
+                float distanceSquared = resourceNode.GlobalPosition.DistanceSquaredTo(clickPosition);
+                if (distanceSquared > nearestDistanceSquared)
+                {
+                    continue;
+                }
+
+                nearestDistanceSquared = distanceSquared;
+                nearestResource = resourceNode;
+            }
+
+            return nearestResource;
         }
 
         private void CommandSelectedUnits(Vector2 targetPosition)

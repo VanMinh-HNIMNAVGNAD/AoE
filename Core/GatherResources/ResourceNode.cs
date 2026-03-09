@@ -7,6 +7,11 @@ public partial class ResourceNode : StaticBody2D
     [Export] public ResourceType Type = ResourceType.Wood;
     [Export] public int AmountLeft = 500; 
 
+    public override void _Ready()
+    {
+        AddToGroup("resource_nodes");
+    }
+
     public int Extract(int amount)
     {
         if (AmountLeft <= 0) return 0;

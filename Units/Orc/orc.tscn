@@ -111,7 +111,7 @@ animations = [{
 radius = 17.0
 height = 40.0
 
-[node name="Orc" instance=ExtResource("1_h838a")]
+[node name="Orc" groups=["Monster"] instance=ExtResource("1_h838a")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
 scale = Vector2(0.5, 0.5)
