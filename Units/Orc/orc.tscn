@@ -1,0 +1,129 @@
+[gd_scene load_steps=18 format=3 uid="uid://cnxbfpowx8ytf"]
+
+[ext_resource type="PackedScene" uid="uid://btgih6dk2orn1" path="res://Units/Base/BaseUnit.tscn" id="1_h838a"]
+[ext_resource type="Texture2D" uid="uid://dl84ipf0a534d" path="res://Assets/Tiny Swords (Update 010)/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="2_kwfe3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud83q"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a03cy"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx6c1"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oa8au"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pa4gv"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hb33v"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvlch"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h838a"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwfe3"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6shi"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61snc"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0pqs"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4xwy"]
+atlas = ExtResource("2_kwfe3")
+region = Rect2(960, 192, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r6shi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud83q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a03cy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gx6c1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oa8au")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pa4gv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hb33v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvlch")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h838a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwfe3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6shi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61snc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0pqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4xwy")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h838a"]
+radius = 17.0
+height = 40.0
+
+[node name="Orc" instance=ExtResource("1_h838a")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_r6shi")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" parent="." index="1"]
+visible = false
+
+[node name="Area2D" type="Area2D" parent="." index="2"]
+
+[node name="MouseInteractionArea" type="CollisionShape2D" parent="Area2D" index="0"]
+visible = false
+shape = SubResource("CapsuleShape2D_h838a")

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://brq8w42ilvlgo"]
+
+[ext_resource type="Script" uid="uid://dkcmt3kvtx3ig" path="res://UI/HoverComponent.cs" id="1_g1x4e"]
+[ext_resource type="Texture2D" uid="uid://dm7u24uh5ubwn" path="res://Assets/Tiny Swords (Update 010)/UI/Buttons/Button_Hover_9Slides.png" id="2_hx4oj"]
+
+[node name="HoverComponent" type="Area2D"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_g1x4e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+visible = false
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+texture = ExtResource("2_hx4oj")
+draw_center = false
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+mouse_filter = 2
+z_index = 10

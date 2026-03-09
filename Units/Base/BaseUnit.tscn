@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://btgih6dk2orn1"]
+
+[ext_resource type="Script" uid="uid://c3x1wy737g3pg" path="res://Units/Base/BaseUnit.cs" id="1_a8b2h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_slfwg"]
+radius = 14.56022
+
+[node name="BaseUnit" type="CharacterBody2D"]
+script = ExtResource("1_a8b2h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_slfwg")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

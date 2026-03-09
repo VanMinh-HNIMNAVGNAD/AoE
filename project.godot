@@ -15,10 +15,6 @@ run/main_scene="uid://dibylm54h60po"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-ResourceManager="*res://Core/ResourceManager.cs"
-
 [display]
 
 window/size/viewport_width=1100
@@ -31,3 +27,7 @@ project/assembly_name="2D_Empire_RTS"
 [filesystem]
 
 import/blender/enabled=false
+
+[layer_names]
+
+2d_physics/layer_4="MouseDetection"
